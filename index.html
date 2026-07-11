@@ -234,10 +234,14 @@ tbody tr:last-child td{border-bottom:none;}
 .franja{display:grid;grid-template-columns:70px 1fr;gap:12px;align-items:stretch;}
 .franja .hora-lbl{font-family:var(--font-mono);font-size:12.5px;color:var(--texto-600);padding-top:10px;text-align:right;}
 .franja .slot{border:1.5px dashed var(--borde);border-radius:9px;min-height:44px;display:flex;align-items:center;padding:6px 10px;gap:8px;flex-wrap:wrap;}
-.cita-chip{display:flex;align-items:center;gap:8px;background:var(--cel-100);border:1px solid var(--cel-300);border-radius:8px;padding:7px 11px;font-size:12.5px;flex:1;min-width:200px;}
-.cita-chip .punto{width:8px;height:8px;border-radius:50%;background:var(--azul-600);flex-shrink:0;}
+.cita-chip{display:flex;align-items:center;gap:8px;background:var(--ambar-bg);border:1px solid #f0d4a0;border-radius:8px;padding:7px 11px;font-size:12.5px;flex:1;min-width:200px;transition:transform .1s;}
+.cita-chip:hover{transform:translateY(-1px);}
+.cita-chip .punto{width:8px;height:8px;border-radius:50%;background:var(--ambar);flex-shrink:0;}
+.cita-chip.confirmada{background:var(--verde-bg);border-color:#9adcb8;}
 .cita-chip.confirmada .punto{background:var(--verde);}
-.cita-chip.cancelada{opacity:.55;text-decoration:line-through;}
+.cita-chip.pendiente{background:var(--ambar-bg);border-color:#f0d4a0;}
+.cita-chip.pendiente .punto{background:var(--ambar);}
+.cita-chip.cancelada{background:var(--rojo-bg);border-color:#f0b8b3;opacity:.75;text-decoration:line-through;}
 .cita-chip.cancelada .punto{background:var(--rojo);}
 .cita-chip .txt{flex:1;}
 .cita-chip .txt b{display:block;color:var(--texto-900);}
@@ -348,6 +352,20 @@ tbody tr:last-child td{border-bottom:none;}
 
       <!-- ================= DASHBOARD ================= -->
       <section class="seccion activa" id="sec-dashboard">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Informe de estado</h2>
+              <div class="sub" id="infoPeriodoTexto">Resumen del día</div>
+            </div>
+            <div class="filtros-row" id="selectorPeriodo">
+              <button class="btn btn-secundario btn-sm periodo-btn activo" data-periodo="dia">Diario</button>
+              <button class="btn btn-linea btn-sm periodo-btn" data-periodo="semana">Semanal</button>
+              <button class="btn btn-linea btn-sm periodo-btn" data-periodo="mes">Mensual</button>
+            </div>
+          </div>
+          <div class="cards-grid" id="informeCards" style="margin-bottom:0;"></div>
+        </div>
         <div class="cards-grid" id="dashCards"></div>
         <div class="grid-2">
           <div class="panel">
@@ -410,6 +428,7 @@ tbody tr:last-child td{border-bottom:none;}
             </div>
           </div>
           <div class="franjas" id="franjasAgenda"></div>
+          <div class="leyenda" id="leyendaAgenda" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--borde);"></div>
         </div>
       </section>
 
@@ -797,7 +816,12 @@ function renderTabFicha(tab){
       <div class="panel-head" style="margin-bottom:10px;"><span class="sub">${p.recetas.length} receta(s)</span><button class="btn btn-primario btn-sm" onclick="abrirModalReceta()">+ Nueva receta</button></div>
       <div class="mini-lista">${p.recetas.length ? [...p.recetas].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(r=>`
         <div class="mini-item">
-          <div class="cab"><span>${fmtFecha(r.fecha)} · ${escapeHtml(nombreEsp(r.especialistaId))}</span><button class="btn btn-icono" onclick="eliminarSub('recetas','${r.id}')">&#128465;</button></div>
+          <div class="cab"><span>${fmtFecha(r.fecha)} · ${escapeHtml(nombreEsp(r.especialistaId))}</span>
+            <span style="display:flex;gap:4px;">
+              <button class="btn btn-icono" title="Imprimir receta" onclick="imprimirReceta('${r.id}')">&#128424;</button>
+              <button class="btn btn-icono" title="Eliminar" onclick="eliminarSub('recetas','${r.id}')">&#128465;</button>
+            </span>
+          </div>
           <div class="cuerpo"><b>${escapeHtml(r.medicamento)}</b> — ${escapeHtml(r.dosis)}<br>${escapeHtml(r.indicaciones||'')}</div>
         </div>`).join('') : '<div class="vacio">Sin recetas registradas.</div>'}</div>
     `;
@@ -830,7 +854,12 @@ function renderTabFicha(tab){
       <div class="panel-head" style="margin-bottom:10px;"><span class="sub">${p.licencias.length} licencia(s)</span><button class="btn btn-primario btn-sm" onclick="abrirModalLicencia()">+ Nueva licencia</button></div>
       <div class="mini-lista">${p.licencias.length ? [...p.licencias].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(l=>`
         <div class="mini-item">
-          <div class="cab"><span>${fmtFecha(l.fecha)} · ${l.dias} día(s)</span><button class="btn btn-icono" onclick="eliminarSub('licencias','${l.id}')">&#128465;</button></div>
+          <div class="cab"><span>${fmtFecha(l.fecha)} · ${l.dias} día(s)</span>
+            <span style="display:flex;gap:4px;">
+              <button class="btn btn-icono" title="Imprimir licencia" onclick="imprimirLicencia('${l.id}')">&#128424;</button>
+              <button class="btn btn-icono" title="Eliminar" onclick="eliminarSub('licencias','${l.id}')">&#128465;</button>
+            </span>
+          </div>
           <div class="cuerpo"><b>Diagnóstico:</b> ${escapeHtml(l.diagnostico)} ${l.archivo?`<br><a href="${l.archivo}" download="licencia_${l.id}" style="color:var(--azul-700);font-weight:700;">&#128206; Ver documento</a>`:''}</div>
         </div>`).join('') : '<div class="vacio">Sin licencias registradas.</div>'}</div>
     `;
@@ -1017,6 +1046,90 @@ function reabrirFicha(tab){ abrirFichaPaciente(PACIENTE_ACTIVO_ID); setTimeout((
   renderTabFicha(tab);
 },0); }
 
+/* ---------- Impresión de recetas y licencias ---------- */
+const LOGO_URL = 'https://res.cloudinary.com/dway4iqeh/image/upload/v1783780694/logo_kvdlao.jpg';
+
+function membreteImpresionHTML(tituloDoc){
+  return `
+    <div style="display:flex;align-items:center;gap:14px;border-bottom:3px solid #1a72b0;padding-bottom:14px;margin-bottom:22px;">
+      <img src="${LOGO_URL}" style="width:60px;height:60px;object-fit:contain;background:#fff;border-radius:10px;padding:4px;border:1px solid #d7e8f2;">
+      <div>
+        <div style="font-family:'Manrope',sans-serif;font-weight:800;font-size:19px;color:#0a3a5c;">MediCenter</div>
+        <div style="font-size:11.5px;color:#4d6a7c;letter-spacing:.04em;text-transform:uppercase;">Centro Médico · ${tituloDoc}</div>
+      </div>
+    </div>
+  `;
+}
+function abrirVentanaImpresion(contenidoHTML){
+  const w = window.open('', '_blank', 'width=820,height=1000');
+  if(!w){ toast('El navegador bloqueó la ventana de impresión. Habilita las ventanas emergentes.','error'); return; }
+  w.document.write(`
+    <!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Documento médico</title>
+    <style>
+      *{box-sizing:border-box;} body{font-family:'Inter',Arial,sans-serif;color:#0f2a3d;max-width:760px;margin:30px auto;padding:0 24px;}
+      table{width:100%;border-collapse:collapse;} td{padding:5px 0;font-size:13.5px;vertical-align:top;}
+      .etiqueta{color:#4d6a7c;font-size:11px;text-transform:uppercase;letter-spacing:.04em;font-weight:700;margin-top:16px;margin-bottom:4px;}
+      .caja{border:1.5px solid #d7e8f2;border-radius:10px;padding:14px 16px;margin-top:6px;background:#f7fbfd;}
+      .firma{margin-top:70px;text-align:center;}
+      .firma .linea{border-top:1.5px solid #0f2a3d;width:280px;margin:0 auto 6px;}
+      @media print{ .no-print{display:none;} body{margin:0;padding:14px 24px;} }
+    </style></head>
+    <body>
+      ${contenidoHTML}
+      <div class="no-print" style="margin-top:30px;text-align:center;">
+        <button onclick="window.print()" style="background:#1a72b0;color:#fff;border:none;padding:11px 22px;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;">Imprimir documento</button>
+      </div>
+    </body></html>
+  `);
+  w.document.close();
+  w.focus();
+  setTimeout(()=>{ try{ w.print(); }catch(e){} }, 400);
+}
+
+function imprimirReceta(recetaId){
+  const p = PACIENTES.find(x=>x.id===PACIENTE_ACTIVO_ID);
+  if(!p) return;
+  const r = p.recetas.find(x=>x.id===recetaId);
+  if(!r) return;
+  const esp = ESPECIALISTAS.find(x=>x.id===r.especialistaId);
+  const html = `
+    ${membreteImpresionHTML('Receta Médica')}
+    <table>
+      <tr><td style="width:50%;"><b>Paciente:</b> ${escapeHtml(p.nombre)}</td><td><b>RUT:</b> ${escapeHtml(p.rut)}</td></tr>
+      <tr><td><b>Edad:</b> ${edadDesde(p.fechaNacimiento)}</td><td><b>Previsión:</b> ${escapeHtml(p.prevision||'—')}</td></tr>
+      <tr><td><b>Fecha de emisión:</b> ${fmtFecha(r.fecha)}</td><td><b>Médico tratante:</b> ${escapeHtml(esp?esp.nombre:'—')}</td></tr>
+      ${esp?`<tr><td colspan="2"><b>Especialidad:</b> ${escapeHtml(esp.especialidad)}</td></tr>`:''}
+    </table>
+    <div class="etiqueta">Rp. (Prescripción)</div>
+    <div class="caja">
+      <div style="font-size:16px;font-weight:800;color:#0a3a5c;">${escapeHtml(r.medicamento)}</div>
+      <div style="margin-top:6px;"><b>Posología:</b> ${escapeHtml(r.dosis)}</div>
+      ${r.indicaciones?`<div style="margin-top:6px;"><b>Indicaciones:</b> ${escapeHtml(r.indicaciones)}</div>`:''}
+    </div>
+    <div class="firma"><div class="linea"></div>Firma y timbre del médico</div>
+  `;
+  abrirVentanaImpresion(html);
+}
+
+function imprimirLicencia(licenciaId){
+  const p = PACIENTES.find(x=>x.id===PACIENTE_ACTIVO_ID);
+  if(!p) return;
+  const l = p.licencias.find(x=>x.id===licenciaId);
+  if(!l) return;
+  const html = `
+    ${membreteImpresionHTML('Licencia Médica')}
+    <table>
+      <tr><td style="width:50%;"><b>Paciente:</b> ${escapeHtml(p.nombre)}</td><td><b>RUT:</b> ${escapeHtml(p.rut)}</td></tr>
+      <tr><td><b>Fecha de emisión:</b> ${fmtFecha(l.fecha)}</td><td><b>Previsión:</b> ${escapeHtml(p.prevision||'—')}</td></tr>
+      <tr><td colspan="2"><b>Días de reposo indicados:</b> ${escapeHtml(String(l.dias))} día(s)</td></tr>
+    </table>
+    <div class="etiqueta">Diagnóstico</div>
+    <div class="caja">${escapeHtml(l.diagnostico)}</div>
+    <div class="firma"><div class="linea"></div>Firma y timbre del médico</div>
+  `;
+  abrirVentanaImpresion(html);
+}
+
 /* ======================================================================
    MÓDULO ESPECIALISTAS
 ====================================================================== */
@@ -1167,6 +1280,12 @@ function renderAgenda(){
   const filtroEsp = document.getElementById('filtroEspecialistaAgenda').value;
   const citasDia = CITAS.filter(c=> c.fecha===fecha && (!filtroEsp || c.especialistaId===filtroEsp));
   const cont = document.getElementById('franjasAgenda');
+  const leyendaEl = document.getElementById('leyendaAgenda');
+  if(leyendaEl) leyendaEl.innerHTML = `
+    <div class="leyenda-item"><span class="leyenda-punto" style="background:var(--verde);"></span> Confirmada</div>
+    <div class="leyenda-item"><span class="leyenda-punto" style="background:var(--ambar);"></span> Pendiente</div>
+    <div class="leyenda-item"><span class="leyenda-punto" style="background:var(--rojo);"></span> Cancelada</div>
+  `;
   if(ESPECIALISTAS.length===0){
     cont.innerHTML = `<div class="vacio"><div class="ico-vacio">&#129658;</div>Registra al menos un especialista para poder agendar horas.</div>`;
     return;
@@ -1178,7 +1297,8 @@ function renderAgenda(){
       <div class="slot">${citasHora.length ? citasHora.map(c=>{
         const p = PACIENTES.find(x=>x.id===c.pacienteId);
         const e = ESPECIALISTAS.find(x=>x.id===c.especialistaId);
-        return `<div class="cita-chip ${c.estado==='confirmada'?'confirmada':''} ${c.estado==='cancelada'?'cancelada':''}" onclick="abrirModalCita('${c.id}')" style="cursor:pointer;">
+        const estadoClase = c.estado==='confirmada' ? 'confirmada' : c.estado==='cancelada' ? 'cancelada' : 'pendiente';
+        return `<div class="cita-chip ${estadoClase}" onclick="abrirModalCita('${c.id}')" style="cursor:pointer;">
           <div class="punto"></div>
           <div class="txt"><b>${escapeHtml(p?p.nombre:'Paciente eliminado')}</b><span>${escapeHtml(e?e.nombre:'—')} · ${escapeHtml(c.prevision)}${c.motivo?' · '+escapeHtml(c.motivo):''}</span></div>
           <span class="badge ${c.estado==='confirmada'?'badge-verde':c.estado==='cancelada'?'badge-rojo':'badge-ambar'}">${c.estado}</span>
@@ -1361,6 +1481,58 @@ function renderChartPrevision(){
   leyenda.innerHTML = Object.entries(grupos).map(([k,v])=>`<div class="leyenda-item"><span class="leyenda-punto" style="background:${colores[k]||'#9adcf5'};"></span> ${k} (${v})</div>`).join('');
 }
 
+/* ---------- Informe de estado por período (diario / semanal / mensual) ---------- */
+let PERIODO_INFORME = 'dia';
+function rangoPeriodo(periodo){
+  const hoy = new Date(); hoy.setHours(0,0,0,0);
+  let inicio = new Date(hoy), fin = new Date(hoy);
+  if(periodo==='dia'){ /* inicio = fin = hoy */ }
+  if(periodo==='semana'){ const diaSemana = (hoy.getDay()+6)%7; inicio.setDate(hoy.getDate()-diaSemana); fin.setDate(inicio.getDate()+6); }
+  if(periodo==='mes'){ inicio = new Date(hoy.getFullYear(), hoy.getMonth(), 1); fin = new Date(hoy.getFullYear(), hoy.getMonth()+1, 0); }
+  const aISO = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  return { inicio: aISO(inicio), fin: aISO(fin) };
+}
+function cambiarPeriodoInforme(periodo){
+  PERIODO_INFORME = periodo;
+  document.querySelectorAll('.periodo-btn').forEach(b=>{
+    const activo = b.dataset.periodo===periodo;
+    b.classList.toggle('activo', activo);
+    b.classList.toggle('btn-secundario', activo);
+    b.classList.toggle('btn-linea', !activo);
+  });
+  renderInformePeriodo();
+}
+document.getElementById('selectorPeriodo').addEventListener('click', e=>{
+  const b = e.target.closest('.periodo-btn'); if(!b) return;
+  cambiarPeriodoInforme(b.dataset.periodo);
+});
+function renderInformePeriodo(){
+  const { inicio, fin } = rangoPeriodo(PERIODO_INFORME);
+  const etiquetas = { dia:'Resumen del día ('+fmtFecha(inicio)+')', semana:'Resumen semanal ('+fmtFecha(inicio)+' — '+fmtFecha(fin)+')', mes:'Resumen mensual ('+fmtFecha(inicio)+' — '+fmtFecha(fin)+')' };
+  document.getElementById('infoPeriodoTexto').textContent = etiquetas[PERIODO_INFORME];
+
+  const citasPeriodo = CITAS.filter(c=> c.fecha>=inicio && c.fecha<=fin);
+  const confirmadas = citasPeriodo.filter(c=>c.estado==='confirmada').length;
+  const pendientes = citasPeriodo.filter(c=>c.estado==='pendiente').length;
+  const canceladas = citasPeriodo.filter(c=>c.estado==='cancelada').length;
+  const pagosPeriodo = PAGOS.filter(p=> p.fecha>=inicio && p.fecha<=fin);
+  const ingresos = pagosPeriodo.filter(p=>p.tipo==='ingreso').reduce((s,p)=>s+p.monto,0);
+  const egresos = pagosPeriodo.filter(p=>p.tipo==='egreso').reduce((s,p)=>s+p.monto,0);
+  const balance = ingresos-egresos;
+  const pacientesAtendidos = new Set(citasPeriodo.filter(c=>c.estado!=='cancelada').map(c=>c.pacienteId)).size;
+
+  document.getElementById('informeCards').innerHTML = `
+    <div class="card-stat"><div class="top"><div class="icono">&#128197;</div></div><div class="valor">${citasPeriodo.length}</div><div class="etiqueta">Citas totales</div></div>
+    <div class="card-stat"><div class="top"><div class="icono">&#9989;</div></div><div class="valor" style="color:var(--verde)">${confirmadas}</div><div class="etiqueta">Confirmadas</div></div>
+    <div class="card-stat"><div class="top"><div class="icono">&#9203;</div></div><div class="valor" style="color:var(--ambar)">${pendientes}</div><div class="etiqueta">Pendientes</div></div>
+    <div class="card-stat"><div class="top"><div class="icono">&#10060;</div></div><div class="valor" style="color:var(--rojo)">${canceladas}</div><div class="etiqueta">Canceladas</div></div>
+    <div class="card-stat"><div class="top"><div class="icono">&#128100;</div></div><div class="valor">${pacientesAtendidos}</div><div class="etiqueta">Pacientes atendidos</div></div>
+    <div class="card-stat"><div class="top"><div class="icono">&#128176;</div></div><div class="valor">${fmtCLP(ingresos)}</div><div class="etiqueta">Ingresos del período</div></div>
+    <div class="card-stat"><div class="top"><div class="icono">&#128184;</div></div><div class="valor">${fmtCLP(egresos)}</div><div class="etiqueta">Egresos del período</div></div>
+    <div class="card-stat"><div class="top"><div class="icono">&#9878;</div></div><div class="valor" style="color:${balance>=0?'var(--verde)':'var(--rojo)'}">${fmtCLP(balance)}</div><div class="etiqueta">Balance del período</div></div>
+  `;
+}
+
 function renderDashboard(){
   const hoy = hoyISO();
   const citasHoy = CITAS.filter(c=>c.fecha===hoy && c.estado!=='cancelada').length;
@@ -1400,6 +1572,7 @@ function renderDashboard(){
 
   renderChartFinanzas();
   renderChartPrevision();
+  renderInformePeriodo();
 }
 
 /* ---------- Inicio ---------- */
