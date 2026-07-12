@@ -3,1598 +3,1024 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MediCenter CRM · Gestión de Centro Médico</title>
-<link rel="icon" href="https://res.cloudinary.com/dway4iqeh/image/upload/v1783780694/logo_kvdlao.jpg">
+<title>Footline · Demo funcional</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ============ TOKENS ============ */
 :root{
-  --azul-950:#06263f;
-  --azul-900:#0a3a5c;
-  --azul-800:#0d4a75;
-  --azul-700:#125d92;
-  --azul-600:#1a72b0;
-  --azul-500:#2b8fd6;
-  --cel-400:#5fbdec;
-  --cel-300:#9adcf5;
-  --cel-100:#dff3fc;
-  --azul-bg:#f2f8fc;
-  --blanco:#ffffff;
-  --texto-900:#0f2a3d;
-  --texto-600:#4d6a7c;
-  --texto-400:#8aa3b2;
-  --borde:#d7e8f2;
-  --verde:#1f9d63;
-  --verde-bg:#e6f7ee;
-  --rojo:#d9463b;
-  --rojo-bg:#fbe9e7;
-  --ambar:#d98c1f;
-  --ambar-bg:#fdf1de;
-  --sombra:0 2px 10px rgba(10,58,92,0.07);
-  --sombra-lg:0 12px 32px rgba(10,58,92,0.14);
-  --radio:12px;
-  --radio-sm:8px;
-  --font-display:'Manrope',sans-serif;
-  --font-body:'Inter',sans-serif;
-  --font-mono:'JetBrains Mono',monospace;
+  --ink:#14211E;--muted:#5C6B67;--faint:#8A9994;--bg:#F2F5F8;--surface:#FFFFFF;--line:#DCE4EC;
+  --pine:#1B5D8C;--pine-deep:#0C3A57;--mint:#D8E8F3;--mint-soft:#EEF4FA;
+  --gold:#C98A1E;--gold-soft:#FBF1DC;--rose:#C2544B;--rose-soft:#FBE9E7;
+  --radius:16px;--shadow:0 1px 2px rgba(20,33,30,.04),0 8px 24px -12px rgba(20,33,30,.12);
 }
-*{box-sizing:border-box;margin:0;padding:0;}
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-  font-family:var(--font-body);
-  background:var(--azul-bg);
-  color:var(--texto-900);
-  min-height:100vh;
-}
-::-webkit-scrollbar{width:8px;height:8px;}
-::-webkit-scrollbar-thumb{background:var(--cel-300);border-radius:8px;}
-a{color:inherit;text-decoration:none;}
-button{font-family:inherit;cursor:pointer;}
-:focus-visible{outline:2px solid var(--azul-500);outline-offset:2px;}
-
-/* ============ SIGNATURE: PULSE LINE ============ */
-.pulso{position:relative;height:2px;width:100%;overflow:hidden;background:rgba(255,255,255,0.15);}
-.pulso svg{position:absolute;top:-11px;left:0;width:200%;height:24px;animation:desplazar 5.5s linear infinite;}
-@keyframes desplazar{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-@media (prefers-reduced-motion: reduce){.pulso svg{animation:none;}}
-
-/* ============ LAYOUT ============ */
-.app{display:flex;min-height:100vh;}
-
-/* Sidebar */
-.sidebar{
-  width:248px;flex-shrink:0;
-  background:linear-gradient(185deg,var(--azul-900),var(--azul-950));
-  color:var(--blanco);
-  display:flex;flex-direction:column;
-  position:sticky;top:0;height:100vh;
-}
-.sidebar .marca{display:flex;align-items:center;gap:12px;padding:18px 16px 14px;}
-.sidebar .marca img{width:76px;height:76px;border-radius:14px;object-fit:contain;background:#fff;padding:5px;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
-.sidebar .marca .txt{line-height:1.15;}
-.sidebar .marca .txt b{font-family:var(--font-display);font-size:16px;font-weight:800;display:block;}
-.sidebar .marca .txt span{font-size:10.5px;color:var(--cel-300);letter-spacing:.06em;text-transform:uppercase;}
-.nav{flex:1;padding:10px 12px;display:flex;flex-direction:column;gap:3px;overflow-y:auto;}
-.nav button{
-  display:flex;align-items:center;gap:11px;
-  background:transparent;border:none;color:rgba(255,255,255,0.72);
-  padding:11px 12px;border-radius:9px;font-size:14px;font-weight:500;text-align:left;
-  transition:background .15s, color .15s;
-}
-.nav button:hover{background:rgba(255,255,255,0.07);color:#fff;}
-.nav button.activo{background:var(--azul-600);color:#fff;font-weight:600;box-shadow:0 2px 10px rgba(26,114,176,0.5);}
-.nav button .ico{width:19px;text-align:center;font-size:15px;}
-.sidebar-foot{padding:14px 18px;font-size:11px;color:var(--cel-300);opacity:.8;border-top:1px solid rgba(255,255,255,0.08);}
-
-/* Main */
-.main{flex:1;min-width:0;display:flex;flex-direction:column;}
-.topbar{
-  background:var(--blanco);border-bottom:1px solid var(--borde);
-  padding:16px 28px;display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:20;
-}
-.topbar h1{font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--azul-900);}
-.topbar .sub{font-size:12.5px;color:var(--texto-600);margin-top:2px;}
-.fecha-hoy{font-size:12.5px;color:var(--texto-600);background:var(--cel-100);padding:7px 13px;border-radius:20px;font-weight:600;}
-.contenido{padding:26px 28px 60px;flex:1;}
-.seccion{display:none;animation:aparecer .25s ease;}
-.seccion.activa{display:block;}
-@keyframes aparecer{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
-
-/* Cards */
-.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-bottom:22px;}
-.card-stat{background:var(--blanco);border-radius:var(--radio);padding:18px 20px;box-shadow:var(--sombra);border:1px solid var(--borde);position:relative;overflow:hidden;}
-.card-stat .top{display:flex;justify-content:space-between;align-items:flex-start;}
-.card-stat .icono{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;background:var(--cel-100);color:var(--azul-700);}
-.card-stat .valor{font-family:var(--font-display);font-size:26px;font-weight:800;color:var(--azul-900);margin-top:12px;}
-.card-stat .etiqueta{font-size:12.5px;color:var(--texto-600);margin-top:2px;}
-.card-stat .delta{font-size:11.5px;font-weight:700;margin-top:8px;display:inline-block;padding:2px 8px;border-radius:20px;}
-.delta.pos{color:var(--verde);background:var(--verde-bg);}
-.delta.neg{color:var(--rojo);background:var(--rojo-bg);}
-
-.panel{background:var(--blanco);border-radius:var(--radio);border:1px solid var(--borde);box-shadow:var(--sombra);padding:20px 22px;margin-bottom:20px;}
-.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px;flex-wrap:wrap;}
-.panel-head h2{font-family:var(--font-display);font-size:16px;font-weight:800;color:var(--azul-900);}
-.panel-head .sub{font-size:12px;color:var(--texto-600);font-weight:500;}
-.grid-2{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;}
-@media(max-width:980px){.grid-2{grid-template-columns:1fr;}}
-
-/* Buttons */
-.btn{
-  border:1px solid transparent;padding:9px 16px;border-radius:9px;font-size:13.5px;font-weight:600;
-  display:inline-flex;align-items:center;gap:7px;transition:all .15s;white-space:nowrap;
-}
-.btn-primario{background:var(--azul-600);color:#fff;}
-.btn-primario:hover{background:var(--azul-700);}
-.btn-secundario{background:var(--cel-100);color:var(--azul-800);}
-.btn-secundario:hover{background:var(--cel-300);}
-.btn-linea{background:transparent;border-color:var(--borde);color:var(--texto-600);}
-.btn-linea:hover{border-color:var(--azul-500);color:var(--azul-700);}
-.btn-peligro{background:var(--rojo-bg);color:var(--rojo);}
-.btn-peligro:hover{background:var(--rojo);color:#fff;}
-.btn-sm{padding:6px 11px;font-size:12px;}
-.btn-icono{width:32px;height:32px;padding:0;justify-content:center;border-radius:8px;background:var(--azul-bg);color:var(--azul-700);}
-.btn-icono:hover{background:var(--cel-300);}
-.btn:disabled{opacity:.45;cursor:not-allowed;}
-
-/* Tables */
-.tabla-wrap{overflow-x:auto;}
-table{width:100%;border-collapse:collapse;font-size:13.5px;}
-thead th{
-  text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--texto-600);
-  padding:10px 12px;border-bottom:2px solid var(--borde);font-weight:700;white-space:nowrap;
-}
-tbody td{padding:12px;border-bottom:1px solid var(--borde);vertical-align:middle;}
-tbody tr:hover{background:var(--azul-bg);}
-tbody tr:last-child td{border-bottom:none;}
-.fila-acciones{display:flex;gap:6px;}
-.vacio{text-align:center;padding:40px 20px;color:var(--texto-400);}
-.vacio .ico-vacio{font-size:34px;margin-bottom:8px;opacity:.5;}
-
-/* Badges */
-.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:700;}
-.badge-azul{background:var(--cel-100);color:var(--azul-700);}
-.badge-verde{background:var(--verde-bg);color:var(--verde);}
-.badge-rojo{background:var(--rojo-bg);color:var(--rojo);}
-.badge-ambar{background:var(--ambar-bg);color:var(--ambar);}
-.badge-gris{background:#eef2f5;color:var(--texto-600);}
-
-/* Forms */
-.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 16px;}
-.form-grid.col-1{grid-template-columns:1fr;}
-.form-grid.col-3{grid-template-columns:repeat(3,1fr);}
-@media(max-width:640px){.form-grid,.form-grid.col-3{grid-template-columns:1fr!important;}}
-.campo{display:flex;flex-direction:column;gap:5px;}
-.campo.full{grid-column:1/-1;}
-.campo label{font-size:12.5px;font-weight:700;color:var(--texto-900);}
-.campo .req{color:var(--rojo);}
-.campo input,.campo select,.campo textarea{
-  border:1.5px solid var(--borde);border-radius:8px;padding:9px 11px;font-size:13.5px;font-family:inherit;
-  background:var(--blanco);color:var(--texto-900);transition:border-color .15s;
-}
-.campo input:focus,.campo select:focus,.campo textarea:focus{border-color:var(--azul-500);}
-.campo textarea{resize:vertical;min-height:64px;}
-.check-group{display:flex;gap:16px;flex-wrap:wrap;padding-top:4px;}
-.check-item{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:500;}
-.check-item input{width:16px;height:16px;accent-color:var(--azul-600);}
-.form-acciones{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid var(--borde);}
-
-/* Search bar */
-.buscador{display:flex;align-items:center;gap:8px;background:var(--azul-bg);border:1.5px solid var(--borde);border-radius:9px;padding:8px 12px;min-width:220px;}
-.buscador input{border:none;background:transparent;outline:none;font-size:13.5px;width:100%;color:var(--texto-900);}
-.buscador .ico{color:var(--texto-400);}
-.filtros-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
-.filtros-row select{border:1.5px solid var(--borde);border-radius:9px;padding:8px 10px;font-size:13px;background:var(--blanco);}
-
-/* Modal */
-.overlay{position:fixed;inset:0;background:rgba(6,38,63,0.55);backdrop-filter:blur(2px);display:none;align-items:flex-start;justify-content:center;z-index:100;padding:36px 16px;overflow-y:auto;}
-.overlay.activo{display:flex;}
-.modal{background:var(--blanco);border-radius:16px;width:100%;max-width:720px;box-shadow:var(--sombra-lg);animation:subir .2s ease;margin-bottom:36px;}
-.modal.ancho{max-width:920px;}
-@keyframes subir{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
-.modal-head{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--borde);}
-.modal-head h3{font-family:var(--font-display);font-size:17px;font-weight:800;color:var(--azul-900);}
-.modal-body{padding:22px;max-height:74vh;overflow-y:auto;}
-.cerrar-x{width:30px;height:30px;border-radius:8px;background:var(--azul-bg);color:var(--texto-600);border:none;font-size:15px;display:flex;align-items:center;justify-content:center;}
-.cerrar-x:hover{background:var(--rojo-bg);color:var(--rojo);}
-
-/* Tabs (patient detail) */
-.tabs{display:flex;gap:4px;border-bottom:1.5px solid var(--borde);margin-bottom:16px;overflow-x:auto;}
-.tab-btn{padding:9px 14px;font-size:13px;font-weight:600;color:var(--texto-600);border-bottom:2.5px solid transparent;background:none;border-top:none;border-left:none;border-right:none;white-space:nowrap;}
-.tab-btn.activo{color:var(--azul-700);border-bottom-color:var(--azul-600);}
-.tab-panel{display:none;}
-.tab-panel.activo{display:block;}
-
-/* Ficha view */
-.ficha-header{display:flex;gap:16px;align-items:center;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--borde);}
-.avatar-paciente{width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,var(--azul-600),var(--cel-400));color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:19px;flex-shrink:0;}
-.ficha-header .nombre{font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--azul-900);}
-.ficha-header .meta{font-size:12.5px;color:var(--texto-600);margin-top:2px;}
-.info-lista{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 22px;font-size:13.5px;}
-.info-lista .fila{display:flex;justify-content:space-between;border-bottom:1px dashed var(--borde);padding-bottom:7px;}
-.info-lista .fila b{color:var(--texto-900);font-weight:600;}
-.info-lista .fila span.val{color:var(--texto-600);text-align:right;}
-.mini-lista{display:flex;flex-direction:column;gap:8px;}
-.mini-item{background:var(--azul-bg);border:1px solid var(--borde);border-radius:9px;padding:10px 13px;font-size:13px;}
-.mini-item .cab{display:flex;justify-content:space-between;font-weight:700;color:var(--azul-800);margin-bottom:3px;}
-.mini-item .cuerpo{color:var(--texto-600);}
-.doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;}
-.doc-item{border:1px solid var(--borde);border-radius:10px;overflow:hidden;background:var(--azul-bg);}
-.doc-item img{width:100%;height:90px;object-fit:cover;display:block;}
-.doc-item .doc-ico{height:90px;display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--azul-600);}
-.doc-item .doc-info{padding:7px 9px;font-size:11px;}
-.doc-item .doc-info .nombre{font-weight:700;color:var(--texto-900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.doc-item .doc-acc{display:flex;justify-content:space-between;padding:0 9px 8px;}
-
-/* Calendar / agenda */
-.agenda-toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
-.dia-selector{display:flex;align-items:center;gap:10px;}
-.dia-selector input[type=date]{border:1.5px solid var(--borde);border-radius:8px;padding:8px 10px;font-size:13.5px;}
-.franjas{display:flex;flex-direction:column;gap:8px;}
-.franja{display:grid;grid-template-columns:70px 1fr;gap:12px;align-items:stretch;}
-.franja .hora-lbl{font-family:var(--font-mono);font-size:12.5px;color:var(--texto-600);padding-top:10px;text-align:right;}
-.franja .slot{border:1.5px dashed var(--borde);border-radius:9px;min-height:44px;display:flex;align-items:center;padding:6px 10px;gap:8px;flex-wrap:wrap;}
-.cita-chip{display:flex;align-items:center;gap:8px;background:var(--ambar-bg);border:1px solid #f0d4a0;border-radius:8px;padding:7px 11px;font-size:12.5px;flex:1;min-width:200px;transition:transform .1s;}
-.cita-chip:hover{transform:translateY(-1px);}
-.cita-chip .punto{width:8px;height:8px;border-radius:50%;background:var(--ambar);flex-shrink:0;}
-.cita-chip.confirmada{background:var(--verde-bg);border-color:#9adcb8;}
-.cita-chip.confirmada .punto{background:var(--verde);}
-.cita-chip.pendiente{background:var(--ambar-bg);border-color:#f0d4a0;}
-.cita-chip.pendiente .punto{background:var(--ambar);}
-.cita-chip.cancelada{background:var(--rojo-bg);border-color:#f0b8b3;opacity:.75;text-decoration:line-through;}
-.cita-chip.cancelada .punto{background:var(--rojo);}
-.cita-chip .txt{flex:1;}
-.cita-chip .txt b{display:block;color:var(--texto-900);}
-.cita-chip .txt span{color:var(--texto-600);font-size:11.5px;}
-.slot-vacio{color:var(--texto-400);font-size:12px;font-style:italic;}
-
-/* Charts */
-.chart-box{width:100%;}
-.leyenda{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;}
-.leyenda-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--texto-600);}
-.leyenda-punto{width:10px;height:10px;border-radius:3px;}
-
-/* Toast */
-#toast-cont{position:fixed;bottom:20px;right:20px;z-index:200;display:flex;flex-direction:column;gap:10px;}
-.toast{background:var(--azul-900);color:#fff;padding:12px 18px;border-radius:10px;font-size:13.5px;font-weight:600;box-shadow:var(--sombra-lg);display:flex;align-items:center;gap:10px;animation:subir .2s ease;min-width:220px;}
-.toast.exito{background:var(--verde);}
-.toast.error{background:var(--rojo);}
-
-/* Login gate */
-.login-wrap{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+  color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
   background:
-    linear-gradient(160deg, rgba(6,38,63,0.82), rgba(10,58,92,0.68)),
-    url('https://res.cloudinary.com/dway4iqeh/image/upload/v1783782545/WhatsApp_Image_2026-07-11_at_11.08.35_glicdk.jpg') center/cover no-repeat fixed;
+    linear-gradient(rgba(238,244,250,0.80), rgba(238,244,250,0.80)),
+    url('https://res.cloudinary.com/dway4iqeh/image/upload/v1783821481/WhatsApp_Image_2026-07-11_at_21.24.58_1_rtfbv3.jpg') center/cover no-repeat fixed;
 }
-.login-card{background:rgba(255,255,255,0.97);backdrop-filter:blur(6px);border-radius:18px;padding:38px 34px;width:100%;max-width:380px;box-shadow:var(--sombra-lg);text-align:center;}
-.login-card img{width:144px;height:144px;border-radius:20px;object-fit:contain;background:#fff;padding:10px;margin-bottom:14px;box-shadow:var(--sombra);}
-.login-card h1{font-family:var(--font-display);font-size:21px;font-weight:800;color:var(--azul-900);}
-.login-card p{font-size:13px;color:var(--texto-600);margin:6px 0 22px;}
-.login-card .campo{text-align:left;margin-bottom:12px;}
-.login-error{background:var(--rojo-bg);color:var(--rojo);font-size:12.5px;font-weight:600;padding:9px 12px;border-radius:8px;margin-bottom:14px;display:none;text-align:left;}
-.login-error.activo{display:block;}
+h1,h2,h3,.dsp{font-family:'Bricolage Grotesque'}
+button{font:inherit;cursor:pointer}
+a{color:var(--pine)}
 
-/* Empty state button center */
-.centrar{display:flex;justify-content:center;padding:12px 0;}
-
-/* Responsive */
-@media(max-width:860px){
-  .sidebar{position:fixed;left:-260px;z-index:60;transition:left .2s;box-shadow:var(--sombra-lg);}
-  .sidebar.abierto{left:0;}
-  .menu-toggle{display:flex!important;}
-  .topbar{padding:14px 16px;}
-  .contenido{padding:18px 14px 50px;}
-  .info-lista{grid-template-columns:1fr;}
+/* ---------- LOGIN ---------- */
+.login{min-height:100vh;display:grid;place-items:center;padding:24px;
+  background:
+    linear-gradient(160deg, rgba(12,58,87,0.86), rgba(27,93,140,0.72)),
+    url('https://res.cloudinary.com/dway4iqeh/image/upload/v1783821481/WhatsApp_Image_2026-07-11_at_21.24.58_1_rtfbv3.jpg') center/cover no-repeat fixed;
 }
-.menu-toggle{display:none;width:36px;height:36px;border-radius:9px;background:var(--azul-bg);color:var(--azul-700);align-items:center;justify-content:center;font-size:16px;border:none;}
-.overlay-mobile{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:55;}
-.overlay-mobile.activo{display:block;}
+.login-card{background:var(--surface);border-radius:24px;box-shadow:0 30px 80px -30px rgba(0,0,0,.5);width:100%;max-width:460px;padding:34px 32px;text-align:center}
+.login .logo{display:inline-flex;align-items:center;gap:10px;margin-bottom:6px}
+.logo-stripe{background:#fff;border-radius:16px;padding:14px 22px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(12,58,87,0.12);margin-bottom:14px;}
+.logo-stripe img{height:52px;display:block;object-fit:contain;}
+.login .logo .name{font-weight:800;font-size:26px;letter-spacing:-.02em}
+.login .logo .sub{font-size:11px;color:var(--faint);letter-spacing:.14em;text-transform:uppercase}
+.login p.lead{color:var(--muted);margin:2px 0 22px;font-size:13.5px}
+.userlist{display:flex;flex-direction:column;gap:9px;text-align:left}
+.userbtn{display:flex;align-items:center;gap:13px;border:1px solid var(--line);background:var(--surface);border-radius:13px;padding:12px 14px;transition:.15s;width:100%}
+.userbtn:hover{border-color:var(--pine);background:var(--mint-soft);transform:translateY(-1px)}
+.userbtn .av{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-weight:700;color:#fff;font-size:14px;flex-shrink:0}
+.userbtn .who{font-weight:600;font-size:14px}
+.userbtn .em{font-size:11.5px;color:var(--faint)}
+.userbtn .badge{margin-left:auto;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--mint);color:var(--pine-deep);letter-spacing:.03em}
+.login .note{margin-top:18px;font-size:11.5px;color:var(--faint)}
+
+/* ---------- APP SHELL ---------- */
+.app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+.side{background:var(--pine-deep);color:#DDEAE6;padding:22px 16px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:6px 8px 18px}
+.brand-stripe{background:#fff;border-radius:14px;padding:12px 16px;display:inline-flex;align-items:center;justify-content:center;width:100%;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+.brand-stripe img{height:68px;display:block;object-fit:contain;}
+.brand .name{font-weight:700;font-size:20px;letter-spacing:-.02em;color:#fff}
+.brand .sub{font-size:10.5px;color:#8FB6AE;letter-spacing:.06em;text-transform:uppercase}
+.navlabel{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6E958D;padding:12px 10px 5px}
+.nav button{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:10px;color:#C7DAD5;border:0;background:transparent;font-weight:500;font-size:13.5px;transition:.15s;width:100%;text-align:left}
+.nav button:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav button.active{background:var(--pine);color:#fff}
+.nav button .dot{margin-left:auto;background:var(--gold);color:#14211E;font-size:11px;font-weight:700;border-radius:20px;padding:1px 7px}
+.side-foot{margin-top:auto;border-top:1px solid rgba(255,255,255,.09);padding-top:12px}
+.side-foot .u{display:flex;align-items:center;gap:10px}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--gold);color:#14211E;display:grid;place-items:center;font-weight:700;font-size:13px}
+.side-foot .who{font-size:13px;font-weight:600;color:#fff}
+.side-foot .role{font-size:11px;color:#8FB6AE}
+.side-foot .switch{margin-top:11px;width:100%;background:rgba(255,255,255,.08);color:#DDEAE6;border:0;border-radius:9px;padding:8px;font-size:12px;font-weight:600}
+.side-foot .switch:hover{background:rgba(255,255,255,.15)}
+
+.main{padding:24px 30px 70px;max-width:1200px}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.top h1{font-weight:700;font-size:27px;letter-spacing:-.02em;line-height:1.1}
+.top .date{color:var(--muted);font-size:13px;margin-top:3px}
+.sedefilter{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:3px;box-shadow:var(--shadow)}
+.sedefilter button{border:0;background:transparent;font-weight:600;font-size:12px;color:var(--muted);padding:6px 12px;border-radius:8px}
+.sedefilter button.on{background:var(--mint);color:var(--pine-deep)}
+
+/* cards / kpis */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:15px 17px;box-shadow:var(--shadow)}
+.kpi .lbl{color:var(--muted);font-size:12px;font-weight:500}
+.kpi .num{font-weight:700;font-size:24px;letter-spacing:-.02em;margin-top:8px;line-height:1}
+.kpi .delta{font-size:11.5px;font-weight:600;margin-top:5px}
+.up{color:var(--pine)}.down{color:var(--rose)}
+.sedes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+.sede{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:17px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.sede .tag{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:13px}
+.sede .tag .sw{width:9px;height:9px;border-radius:3px}
+.sede .big{font-weight:700;font-size:24px;letter-spacing:-.02em;margin-top:11px;line-height:1}
+.sede .cap{color:var(--faint);font-size:11.5px;margin-top:3px}
+.sede .row{display:flex;justify-content:space-between;margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.sede .row b{color:var(--ink);font-weight:600}
+
+.grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.card .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px}
+.card h3{font-weight:600;font-size:16px;letter-spacing:-.01em}
+
+/* toolbar */
+.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.search{flex:1;min-width:180px;display:flex;align-items:center;gap:9px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:9px 13px;box-shadow:var(--shadow)}
+.search input{border:0;outline:0;font:inherit;width:100%;background:transparent}
+.btn{background:var(--pine);color:#fff;border:0;border-radius:11px;padding:9px 15px;font-weight:600;font-size:13px;box-shadow:var(--shadow)}
+.btn:hover{background:var(--pine-deep)}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--mint-soft)}
+.btn.sm{padding:6px 11px;font-size:12px;border-radius:9px}
+
+/* table */
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);font-weight:600;padding:0 14px 10px}
+td{padding:12px 14px;border-top:1px solid var(--line);font-size:13.5px;vertical-align:middle}
+tr.clickable:hover{background:var(--mint-soft);cursor:pointer}
+.pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;display:inline-block}
+.pill.ok{background:var(--mint);color:var(--pine-deep)}
+.pill.wait{background:var(--gold-soft);color:var(--gold)}
+.pill.risk{background:var(--rose-soft);color:var(--rose)}
+.pager{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:var(--muted);font-size:12.5px}
+.pager button{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:6px 12px;font-weight:600;font-size:12px}
+.pager button:disabled{opacity:.4;cursor:not-allowed}
+
+/* agenda */
+.apt{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+.apt:first-of-type{border-top:0}
+.apt .time{font-weight:700;font-family:'Bricolage Grotesque';font-size:13px;width:46px;color:var(--pine-deep)}
+.apt .who{font-weight:600;font-size:13.5px}
+.apt .meta{font-size:12px;color:var(--muted)}
+.apt .actions{margin-left:auto;display:flex;gap:6px;align-items:center}
+
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(10,33,29,.45);display:none;place-items:center;padding:20px;z-index:50}
+.overlay.show{display:grid}
+.modal{background:var(--surface);border-radius:20px;width:100%;max-width:480px;padding:26px;box-shadow:0 30px 80px -30px rgba(0,0,0,.5);max-height:90vh;overflow:auto}
+.modal h3{font-size:19px;margin-bottom:16px}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.field input,.field select{width:100%;border:1px solid var(--line);border-radius:11px;padding:10px 12px;font:inherit;outline:0}
+.field input:focus,.field select:focus{border-color:var(--pine)}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+
+/* toast */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--pine-deep);color:#fff;padding:11px 20px;border-radius:12px;font-size:13.5px;font-weight:500;opacity:0;transition:.25s;z-index:60;box-shadow:0 12px 30px -10px rgba(0,0,0,.4)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* rendimiento por sede */
+.perf td{vertical-align:middle}
+.bar-cell{min-width:170px}
+.bar-track{height:7px;background:var(--mint-soft);border-radius:6px;overflow:hidden;margin-top:6px}
+.bar-fill{height:100%;border-radius:6px;transition:width .4s}
+.empty{text-align:center;padding:46px 20px;color:var(--muted)}
+.empty .em-ic{font-size:34px;opacity:.4}
+.empty h4{font-family:'Bricolage Grotesque';font-size:16px;margin:10px 0 4px;color:var(--ink)}
+.hint{background:var(--gold-soft);border:1px solid #EBD9AE;color:#7A5410;border-radius:12px;padding:11px 14px;font-size:12.5px;margin-bottom:16px}
+
+/* ficha clínica del paciente */
+.ftabs{display:flex;gap:4px;border-bottom:1.5px solid var(--line);margin:16px 0 18px;overflow-x:auto}
+.ftab{padding:9px 14px;font-size:13px;font-weight:600;color:var(--muted);border:0;border-bottom:2.5px solid transparent;background:none;white-space:nowrap}
+.ftab.on{color:var(--pine);border-bottom-color:var(--pine)}
+.reg-item{background:var(--mint-soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.reg-item .rhead{display:flex;justify-content:space-between;align-items:center;font-weight:700;color:var(--pine-deep);margin-bottom:5px;font-size:12.5px;gap:10px}
+.reg-item .rhead .racc{display:flex;gap:4px;flex-shrink:0}
+.reg-item .rbody{color:var(--muted);font-size:13px;line-height:1.55}
+.reg-item .rbody b{color:var(--ink)}
+.campo-ficha{display:flex;flex-direction:column;gap:2px}
+.campo-ficha .et{font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.05em}
+.doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(124px,1fr));gap:12px}
+.doc-item{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--mint-soft)}
+.doc-item img{width:100%;height:82px;object-fit:cover;display:block}
+.doc-item .doc-ico{height:82px;display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--pine)}
+.doc-item .doc-info{padding:7px 9px;font-size:11px}
+.doc-item .doc-info b{display:block;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.doc-item .doc-acc{display:flex;justify-content:space-between;padding:0 9px 8px}
+
+@media(max-width:940px){
+  .app{grid-template-columns:1fr}
+  .side{position:static;height:auto}
+  .main{padding:18px}
+  .kpis{grid-template-columns:1fr 1fr}.sedes{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
-<!-- ============ LOGIN GATE ============ -->
-<div class="login-wrap" id="vistaLogin">
-  <div class="login-card">
-    <img src="https://res.cloudinary.com/dway4iqeh/image/upload/v1783780694/logo_kvdlao.jpg" alt="MediCenter">
-    <h1>MediCenter CRM</h1>
-    <p>Gestión clínica y administrativa del centro médico</p>
-    <div class="login-error" id="loginError">Usuario o contraseña incorrectos. Verifica tus credenciales.</div>
-    <div class="campo">
-      <label>Usuario</label>
-      <input type="text" id="loginUsuario" placeholder="Ej: medcrm01" autocomplete="username" onkeydown="if(event.key==='Enter') document.getElementById('loginPassword').focus()">
-    </div>
-    <div class="campo">
-      <label>Contraseña</label>
-      <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter') entrarApp()">
-    </div>
-    <button class="btn btn-primario" style="width:100%;justify-content:center;padding:11px;" onclick="entrarApp()">Ingresar a la plataforma</button>
-    <p style="margin-top:16px;font-size:11.5px;color:var(--texto-400);">Todos los datos se almacenan localmente en este navegador.</p>
-  </div>
-</div>
-
-<!-- ============ APP ============ -->
-<div class="app" id="vistaApp" style="display:none;">
-  <div class="overlay-mobile" id="overlayMobile" onclick="toggleMenu(false)"></div>
-  <aside class="sidebar" id="sidebar">
-    <div class="pulso"><svg viewBox="0 0 400 24" preserveAspectRatio="none"><polyline points="0,12 30,12 40,4 50,20 60,12 90,12 100,2 112,22 124,12 400,12" fill="none" stroke="#5fbdec" stroke-width="1.6"/><polyline points="400,12 430,12 440,4 450,20 460,12 490,12 500,2 512,22 524,12 800,12" fill="none" stroke="#5fbdec" stroke-width="1.6"/></svg></div>
-    <div class="marca">
-      <img src="https://res.cloudinary.com/dway4iqeh/image/upload/v1783780694/logo_kvdlao.jpg" alt="Logo">
-      <div class="txt"><b>MediCenter</b><span>CRM Clínico</span></div>
-    </div>
-    <nav class="nav" id="navMenu">
-      <button data-seccion="dashboard" class="activo"><span class="ico">&#9673;</span> Dashboard</button>
-      <button data-seccion="pacientes"><span class="ico">&#128100;</span> Pacientes</button>
-      <button data-seccion="especialistas"><span class="ico">&#129658;</span> Especialistas</button>
-      <button data-seccion="agenda"><span class="ico">&#128197;</span> Agendamiento</button>
-      <button data-seccion="pagos"><span class="ico">&#128176;</span> Pagos y Finanzas</button>
-    </nav>
-    <div class="sidebar-foot">
-      <div id="operadorFoot">Operador: —</div>
-      <button class="btn btn-linea btn-sm" style="width:100%;justify-content:center;margin-top:9px;color:#fff;border-color:rgba(255,255,255,0.25);" onclick="cerrarSesion()">&#9211; Cerrar sesión</button>
-    </div>
-  </aside>
-
-  <div class="main">
-    <div class="topbar">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
-        <div>
-          <h1 id="tituloSeccion">Dashboard</h1>
-          <div class="sub" id="subtituloSeccion">Resumen general del centro médico</div>
-        </div>
-      </div>
-      <div class="fecha-hoy" id="fechaHoyTop"></div>
-    </div>
-
-    <div class="contenido">
-
-      <!-- ================= DASHBOARD ================= -->
-      <section class="seccion activa" id="sec-dashboard">
-        <div class="panel">
-          <div class="panel-head">
-            <div>
-              <h2>Informe de estado</h2>
-              <div class="sub" id="infoPeriodoTexto">Resumen del día</div>
-            </div>
-            <div class="filtros-row" id="selectorPeriodo">
-              <button class="btn btn-secundario btn-sm periodo-btn activo" data-periodo="dia">Diario</button>
-              <button class="btn btn-linea btn-sm periodo-btn" data-periodo="semana">Semanal</button>
-              <button class="btn btn-linea btn-sm periodo-btn" data-periodo="mes">Mensual</button>
-            </div>
-          </div>
-          <div class="cards-grid" id="informeCards" style="margin-bottom:0;"></div>
-        </div>
-        <div class="cards-grid" id="dashCards"></div>
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-head"><h2>Ingresos vs Egresos (últimos 6 meses)</h2></div>
-            <div class="chart-box" id="chartFinanzas"></div>
-          </div>
-          <div class="panel">
-            <div class="panel-head"><h2>Pacientes por previsión</h2></div>
-            <div class="chart-box" id="chartPrevision"></div>
-            <div class="leyenda" id="leyendaPrevision"></div>
-          </div>
-        </div>
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-head"><h2>Próximas citas</h2></div>
-            <div class="tabla-wrap"><table><thead><tr><th>Paciente</th><th>Especialista</th><th>Fecha</th><th>Hora</th><th>Previsión</th></tr></thead><tbody id="dashProximasCitas"></tbody></table></div>
-          </div>
-          <div class="panel">
-            <div class="panel-head"><h2>Especialistas con más atenciones</h2></div>
-            <div id="rankingEspecialistas" style="display:flex;flex-direction:column;gap:10px;"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= PACIENTES ================= -->
-      <section class="seccion" id="sec-pacientes">
-        <div class="panel">
-          <div class="panel-head">
-            <div class="buscador"><span class="ico">&#128269;</span><input type="text" id="buscarPaciente" placeholder="Buscar por nombre o RUT..." oninput="renderPacientes()"></div>
-            <button class="btn btn-primario" onclick="abrirModalPaciente()">+ Nuevo paciente</button>
-          </div>
-          <div class="tabla-wrap"><table><thead><tr><th>Paciente</th><th>RUT</th><th>Edad</th><th>Previsión</th><th>Teléfono</th><th>Última atención</th><th></th></tr></thead><tbody id="tablaPacientes"></tbody></table></div>
-        </div>
-      </section>
-
-      <!-- ================= ESPECIALISTAS ================= -->
-      <section class="seccion" id="sec-especialistas">
-        <div class="panel">
-          <div class="panel-head">
-            <div class="buscador"><span class="ico">&#128269;</span><input type="text" id="buscarEspecialista" placeholder="Buscar por nombre o especialidad..." oninput="renderEspecialistas()"></div>
-            <button class="btn btn-primario" onclick="abrirModalEspecialista()">+ Nuevo especialista</button>
-          </div>
-          <div class="tabla-wrap"><table><thead><tr><th>Nombre</th><th>Especialidad</th><th>Convenios</th><th>Teléfono</th><th>Email</th><th></th></tr></thead><tbody id="tablaEspecialistas"></tbody></table></div>
-        </div>
-      </section>
-
-      <!-- ================= AGENDA ================= -->
-      <section class="seccion" id="sec-agenda">
-        <div class="panel">
-          <div class="agenda-toolbar">
-            <div class="dia-selector">
-              <button class="btn btn-icono" onclick="cambiarDiaAgenda(-1)">&#8592;</button>
-              <input type="date" id="fechaAgenda" onchange="renderAgenda()">
-              <button class="btn btn-icono" onclick="cambiarDiaAgenda(1)">&#8594;</button>
-              <button class="btn btn-linea btn-sm" onclick="irHoyAgenda()">Hoy</button>
-            </div>
-            <div class="filtros-row">
-              <select id="filtroEspecialistaAgenda" onchange="renderAgenda()"><option value="">Todos los especialistas</option></select>
-              <button class="btn btn-primario" onclick="abrirModalCita()">+ Agendar hora</button>
-            </div>
-          </div>
-          <div class="franjas" id="franjasAgenda"></div>
-          <div class="leyenda" id="leyendaAgenda" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--borde);"></div>
-        </div>
-      </section>
-
-      <!-- ================= PAGOS ================= -->
-      <section class="seccion" id="sec-pagos">
-        <div class="cards-grid" id="pagosCards"></div>
-        <div class="panel">
-          <div class="panel-head">
-            <div class="filtros-row">
-              <select id="filtroTipoPago" onchange="renderPagos()">
-                <option value="">Todos los movimientos</option>
-                <option value="ingreso">Solo ingresos</option>
-                <option value="egreso">Solo egresos</option>
-              </select>
-              <select id="filtroMetodoPago" onchange="renderPagos()">
-                <option value="">Todos los métodos</option>
-                <option value="particular">Particular</option>
-                <option value="bono">Bono</option>
-                <option value="isapre">ISAPRE</option>
-                <option value="fonasa">FONASA</option>
-                <option value="gasto">Gasto centro</option>
-              </select>
-            </div>
-            <div style="display:flex;gap:10px;">
-              <button class="btn btn-secundario" onclick="abrirModalPago('egreso')">+ Registrar gasto</button>
-              <button class="btn btn-primario" onclick="abrirModalPago('ingreso')">+ Registrar pago</button>
-            </div>
-          </div>
-          <div class="tabla-wrap"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Descripción</th><th>Paciente</th><th>Método</th><th>Monto</th><th></th></tr></thead><tbody id="tablaPagos"></tbody></table></div>
-        </div>
-      </section>
-
-    </div>
-  </div>
-</div>
-
-<div id="toast-cont"></div>
-
-<!-- ============ MODALES ============ -->
-<div class="overlay" id="overlayGenerico"></div>
+<div id="root"></div>
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
 
 <script>
-/* ======================================================================
-   MEDICENTER CRM — LÓGICA DE APLICACIÓN
-   Persistencia 100% localStorage. Sin backend, sin dependencias externas.
-====================================================================== */
-
-/* ---------- Utilidades ---------- */
-const LS_KEYS = { pacientes:'mc_pacientes', especialistas:'mc_especialistas', citas:'mc_citas', pagos:'mc_pagos', operador:'mc_operador', usuario:'mc_usuario' };
-
-function uid(prefix){ return (prefix||'id') + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
-function cargar(key){ try{ return JSON.parse(localStorage.getItem(key)) || []; }catch(e){ return []; } }
-function guardar(key,val){ localStorage.setItem(key, JSON.stringify(val)); }
-function fmtCLP(n){ n = Number(n)||0; return '$' + n.toLocaleString('es-CL'); }
-function fmtFecha(f){ if(!f) return '—'; const [y,m,d]=f.split('-'); return d+'/'+m+'/'+y; }
-function hoyISO(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
-function edadDesde(fechaNac){ if(!fechaNac) return '—'; const hoy=new Date(), n=new Date(fechaNac); let e=hoy.getFullYear()-n.getFullYear(); const m=hoy.getMonth()-n.getMonth(); if(m<0||(m===0&&hoy.getDate()<n.getDate())) e--; return e+' años'; }
-function escapeHtml(s){ if(s===undefined||s===null) return ''; return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function iniciales(nombre){ return (nombre||'').trim().split(/\s+/).slice(0,2).map(p=>p[0]).join('').toUpperCase() || '?'; }
-
-function toast(msg, tipo){
-  const cont = document.getElementById('toast-cont');
-  const el = document.createElement('div');
-  el.className = 'toast' + (tipo?(' '+tipo):'');
-  el.textContent = msg;
-  cont.appendChild(el);
-  setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(),300); }, 2600);
-}
-
-/* ---------- Estado en memoria (sincronizado con localStorage) ---------- */
-let PACIENTES = cargar(LS_KEYS.pacientes);
-let ESPECIALISTAS = cargar(LS_KEYS.especialistas);
-let CITAS = cargar(LS_KEYS.citas);
-let PAGOS = cargar(LS_KEYS.pagos);
-
-function persistTodo(){
-  guardar(LS_KEYS.pacientes, PACIENTES);
-  guardar(LS_KEYS.especialistas, ESPECIALISTAS);
-  guardar(LS_KEYS.citas, CITAS);
-  guardar(LS_KEYS.pagos, PAGOS);
-}
-
-/* ---------- Login ---------- */
-const USUARIOS_VALIDOS = {
-  'medcrm01': 'Operador MedCRM 01',
-  'medcrm02': 'Operador MedCRM 02'
+/* ============ DATA ============ */
+const SEDES = ['CITSALUD','KIDDO','KMOTION'];
+const SEDE_COLOR = {CITSALUD:'#1B5D8C', KIDDO:'#C98A1E', KMOTION:'#8A9994'};
+const PROS = {
+  CITSALUD:['Klga. Rojas','Klgo. Pérez','Klga. Muñoz'],
+  KIDDO:['Klga. Tapia'],
+  KMOTION:['Klgo. Vera']
 };
-const CLAVE_GENERAL = 'crm1234';
+const SERVICIOS = ['Sesión kinésica','Evaluación inicial','Terapia manual','Rehabilitación','Control','Evaluación postural'];
 
-function entrarApp(){
-  const usuario = document.getElementById('loginUsuario').value.trim().toLowerCase();
-  const clave = document.getElementById('loginPassword').value;
-  const errorBox = document.getElementById('loginError');
-  if(!USUARIOS_VALIDOS[usuario] || clave !== CLAVE_GENERAL){
-    errorBox.classList.add('activo');
-    document.getElementById('loginPassword').value='';
-    return;
+const USERS = [
+  {email:'admin@kraibe.cl', name:'Gabriel Kraemer', role:'KRAIBE_ADMIN', sede:null, av:'#0C3A57', badge:'KRAIBE'},
+  {email:'owner@footline.test', name:'Javier Meneses', role:'OWNER', sede:null, av:'#1B5D8C', badge:'OWNER'},
+  {email:'citsalud@footline.test', name:'Recepción CITSALUD', role:'SECRETARIA', sede:'CITSALUD', av:'#1B5D8C', badge:'CITSALUD'},
+  {email:'kiddo@footline.test', name:'Recepción KIDDO', role:'SECRETARIA', sede:'KIDDO', av:'#C98A1E', badge:'KIDDO'},
+  {email:'kmotion@footline.test', name:'Recepción KMOTION', role:'SECRETARIA', sede:'KMOTION', av:'#8A9994', badge:'KMOTION'},
+];
+
+const NOMBRES = ['María Fuentes','Tomás Rivas','Carla Núñez','Ignacio Soto','Paula Vega','Diego Álvarez','Fernanda Cortés','Sebastián Reyes','Valentina Muñoz','Matías Herrera','Josefa Castro','Benjamín Rojas','Antonia Silva','Vicente Torres','Camila Fuenzalida','Joaquín Bravo','Isidora Pinto','Cristóbal Vera','Florencia Díaz','Agustín Morales','Martina Sepúlveda','Gabriel Araya','Emilia Gutiérrez','Lucas Navarrete','Sofía Cárdenas','Maximiliano Ortiz','Amanda Riquelme','Felipe Salazar','Catalina Poblete','Renato Miranda','Trinidad Espinoza','Bastián Contreras','Javiera Lagos','Nicolás Fuentealba','Constanza Vidal','Alonso Peña','Magdalena Rubio','Damián Cáceres','Rocío Valdés','Emiliano Godoy'];
+
+function rut(){ let n=Math.floor(7000000+Math.random()*15000000); return n.toLocaleString('es-CL')+'-'+Math.floor(Math.random()*10); }
+function daysAgo(d){ const x=new Date(); x.setDate(x.getDate()-d); return x.toISOString().slice(0,10); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function money(n){ return '$'+Math.round(n).toLocaleString('es-CL'); }
+
+const DB = { patients:[], appointments:[], sales:[], expenses:[], debts:[], billing:[] };
+
+function seed(){
+  // patients — weighted toward CITSALUD
+  const SEXOS=['Femenino','Masculino'];
+  const PREVISIONES=['FONASA','ISAPRE','Particular'];
+  const GRUPOS=['O+','A+','B+','O-','A-','AB+'];
+  NOMBRES.forEach((nom,i)=>{
+    const r=Math.random(); const sede = r<0.72?'CITSALUD':(r<0.92?'KIDDO':'KMOTION');
+    const edad = 12+Math.floor(Math.random()*60);
+    const hist=[]; const nh=1+Math.floor(Math.random()*5);
+    for(let h=0;h<nh;h++) hist.push({id:h+1, fecha:daysAgo(Math.floor(Math.random()*180)), motivo:pick(SERVICIOS), pro:pick(PROS[sede]), diagnostico:'', tratamiento:''});
+    hist.sort((a,b)=>a.fecha<b.fecha?1:-1);
+    DB.patients.push({id:i+1, nombre:nom, rut:rut(), sede, edad, telefono:'+569 '+(4000+Math.floor(Math.random()*5000))+' '+(1000+Math.floor(Math.random()*8999)), ultima:hist[0].fecha, historial:hist,
+      fechaNacimiento:daysAgo(edad*365), sexo:pick(SEXOS), direccion:'', prevision:pick(PREVISIONES), contactoEmergencia:'', alergias:'', antecedentes:'', medicamentosHabituales:'', grupoSanguineo:pick(GRUPOS),
+      recetas:[], derivaciones:[], examenes:[], licencias:[], documentos:[]});
+  });
+  // appointments today + next days
+  const horas=['09:00','09:45','10:30','11:15','12:00','15:00','16:00','16:45','17:30'];
+  let aid=1;
+  for(let d=0;d<3;d++){
+    const n=6+Math.floor(Math.random()*4);
+    for(let k=0;k<n;k++){
+      const p=pick(DB.patients);
+      const est = Math.random()<0.35?'sin_confirmar':(Math.random()<0.5?'pendiente':'confirmada');
+      DB.appointments.push({id:aid++, fecha:daysAgo(-d), hora:pick(horas), pacienteId:p.id, paciente:p.nombre, sede:p.sede, pro:pick(PROS[p.sede]), motivo:pick(SERVICIOS), estado:est});
+    }
   }
-  errorBox.classList.remove('activo');
-  const operador = USUARIOS_VALIDOS[usuario];
-  localStorage.setItem(LS_KEYS.operador, operador);
-  localStorage.setItem(LS_KEYS.usuario, usuario);
-  document.getElementById('vistaLogin').style.display='none';
-  document.getElementById('vistaApp').style.display='flex';
-  document.getElementById('operadorFoot').textContent = 'Operador: ' + operador;
-  iniciarApp();
+  DB.appointments.sort((a,b)=> a.fecha===b.fecha ? (a.hora<b.hora?-1:1) : (a.fecha<b.fecha?-1:1));
+  // sales last 7 days
+  let sid=1;
+  for(let d=0;d<7;d++){
+    const n=4+Math.floor(Math.random()*7);
+    for(let k=0;k<n;k++){
+      const p=pick(DB.patients);
+      DB.sales.push({id:sid++, fecha:daysAgo(d), pacienteId:p.id, paciente:p.nombre, sede:p.sede, servicio:pick(SERVICIOS), monto:15000+Math.floor(Math.random()*8)*5000, pago:Math.random()<0.78?'pagado':'pendiente'});
+    }
+  }
+  DB.sales.sort((a,b)=>a.fecha<b.fecha?1:-1);
+  // expenses
+  const cats=['Insumos clínicos','Arriendo','Servicios básicos','Marketing','Sueldos','Mantención'];
+  let eid=1;
+  for(let d=0;d<7;d++){ if(Math.random()<0.7){ const sede=pick(SEDES); DB.expenses.push({id:eid++, fecha:daysAgo(d), sede, categoria:pick(cats), descripcion:'Egreso operacional', monto:20000+Math.floor(Math.random()*15)*10000}); } }
+  DB.expenses.sort((a,b)=>a.fecha<b.fecha?1:-1);
+  // debts (from pending sales)
+  DB.sales.filter(s=>s.pago==='pendiente').slice(0,8).forEach((s,i)=>{
+    DB.debts.push({id:i+1, paciente:s.paciente, sede:s.sede, monto:s.monto, dias:5+Math.floor(Math.random()*40), estado:'activa'});
+  });
+  // billing Kraibe<->Footline
+  DB.billing=[
+    {mes:'Julio 2026', concepto:'Licencia mensual Footline MVP', monto:390000, estado:'pendiente'},
+    {mes:'Junio 2026', concepto:'Licencia mensual Footline MVP', monto:390000, estado:'pagado'},
+    {mes:'Junio 2026', concepto:'Setup + importación histórico', monto:850000, estado:'pagado'},
+  ];
 }
-function cerrarSesion(){
-  localStorage.removeItem(LS_KEYS.operador);
-  localStorage.removeItem(LS_KEYS.usuario);
-  location.reload();
+seed();
+
+/* ============ SESSION / STATE ============ */
+const S = { user:null, view:'dashboard', sedeFilter:'all', patientPage:0, patientQuery:'', detail:null, patientTab:'datos', commission:15 };
+
+function visibleSedes(){
+  if(S.user.role==='SECRETARIA') return [S.user.sede];
+  return S.sedeFilter==='all' ? SEDES : [S.sedeFilter];
 }
-/* La plataforma siempre solicita credenciales al iniciar: no se mantiene sesión
-   guardada entre cargas de página, aunque los datos clínicos y financieros
-   permanecen intactos en localStorage. */
-localStorage.removeItem(LS_KEYS.operador);
-localStorage.removeItem(LS_KEYS.usuario);
+function inScope(sede){ return visibleSedes().includes(sede); }
+function isSecretaria(){ return S.user.role==='SECRETARIA'; }
+function canBilling(){ return S.user.role==='OWNER' || S.user.role==='KRAIBE_ADMIN'; }
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function unconfirmedToday(){ return DB.appointments.filter(a=>a.fecha===todayStr() && inScope(a.sede) && a.estado!=='confirmada').length; }
 
-/* ---------- Datos de demostración (solo si está todo vacío) ---------- */
-function sembrarDatosDemo(){
-  if(PACIENTES.length || ESPECIALISTAS.length) return;
-  const e1 = { id:uid('esp'), nombre:'Dra. Constanza Rivas', especialidad:'Medicina Familiar', convenios:['particular','fonasa','isapre'], telefono:'+56 9 8123 4567', email:'crivas@medicenter.cl', horario:'Lun-Vie 09:00-17:00' };
-  const e2 = { id:uid('esp'), nombre:'Dr. Felipe Aránguiz', especialidad:'Traumatología', convenios:['particular','isapre'], telefono:'+56 9 7654 3210', email:'faranguiz@medicenter.cl', horario:'Mar-Jue 10:00-18:00' };
-  const e3 = { id:uid('esp'), nombre:'Dra. Javiera Solís', especialidad:'Pediatría', convenios:['particular','fonasa'], telefono:'+56 9 6543 2109', email:'jsolis@medicenter.cl', horario:'Lun-Sáb 08:30-13:00' };
-  ESPECIALISTAS.push(e1,e2,e3);
+/* ============ RENDER ============ */
+const root=()=>document.getElementById('root');
 
-  const p1 = { id:uid('pac'), nombre:'María José Contreras', rut:'15.234.567-8', fechaNacimiento:'1988-04-12', sexo:'Femenino', telefono:'+56 9 1122 3344', email:'mjcontreras@gmail.com', direccion:'Av. Los Leones 234, Providencia', prevision:'ISAPRE', grupoSanguineo:'O+', contactoEmergencia:'Pedro Contreras · +56 9 5566 7788', alergias:'Penicilina', antecedentes:'Hipertensión controlada', medicamentosHabituales:'Losartán 50mg',
-    documentos:[], recetas:[{id:uid('rec'),fecha:hoyISO(),medicamento:'Losartán 50mg',dosis:'1 comp. cada 24h',especialistaId:e1.id,indicaciones:'Tomar en ayunas'}],
-    derivaciones:[], examenes:[{id:uid('exa'),fecha:hoyISO(),tipo:'Perfil lipídico',resultado:'Colesterol total 210 mg/dL',archivo:null}],
-    historial:[{id:uid('hist'),fecha:hoyISO(),especialistaId:e1.id,motivo:'Control rutinario',diagnostico:'Paciente estable',tratamiento:'Mantener tratamiento actual'}],
-    licencias:[] };
-  PACIENTES.push(p1);
-
-  const c1 = { id:uid('cita'), pacienteId:p1.id, especialistaId:e1.id, fecha:hoyISO(), hora:'10:00', prevision:'ISAPRE', motivo:'Control', estado:'confirmada' };
-  CITAS.push(c1);
-
-  const pg1 = { id:uid('pago'), tipo:'ingreso', categoria:'Consulta médica', pacienteId:p1.id, especialistaId:e1.id, monto:35000, metodo:'isapre', fecha:hoyISO(), descripcion:'Consulta medicina familiar' };
-  PAGOS.push(pg1);
-
-  persistTodo();
-}
-
-/* ---------- Navegación ---------- */
-const TITULOS = {
-  dashboard:['Dashboard','Resumen general del centro médico'],
-  pacientes:['Pacientes','Fichas médicas, historial y documentos'],
-  especialistas:['Especialistas','Equipo médico y convenios de atención'],
-  agenda:['Agendamiento','Calendario de horas médicas'],
-  pagos:['Pagos y Finanzas','Ingresos, egresos y prestaciones']
-};
-function cambiarSeccion(nombre){
-  document.querySelectorAll('.seccion').forEach(s=>s.classList.remove('activa'));
-  document.getElementById('sec-'+nombre).classList.add('activa');
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('activo', b.dataset.seccion===nombre));
-  document.getElementById('tituloSeccion').textContent = TITULOS[nombre][0];
-  document.getElementById('subtituloSeccion').textContent = TITULOS[nombre][1];
-  toggleMenu(false);
-  if(nombre==='dashboard') renderDashboard();
-  if(nombre==='pacientes') renderPacientes();
-  if(nombre==='especialistas') renderEspecialistas();
-  if(nombre==='agenda') renderAgenda();
-  if(nombre==='pagos') renderPagos();
-}
-document.getElementById('navMenu').addEventListener('click', e=>{
-  const btn = e.target.closest('button[data-seccion]');
-  if(btn) cambiarSeccion(btn.dataset.seccion);
-});
-function toggleMenu(forzar){
-  const sb = document.getElementById('sidebar'), ov = document.getElementById('overlayMobile');
-  const abrir = forzar!==undefined ? forzar : !sb.classList.contains('abierto');
-  sb.classList.toggle('abierto', abrir);
-  ov.classList.toggle('activo', abrir);
-}
-
-/* ---------- Modal genérico ---------- */
-function abrirModal(html, ancho){
-  const ov = document.getElementById('overlayGenerico');
-  ov.innerHTML = `<div class="modal${ancho?' ancho':''}">${html}</div>`;
-  ov.classList.add('activo');
-}
-function cerrarModal(){
-  document.getElementById('overlayGenerico').classList.remove('activo');
-  document.getElementById('overlayGenerico').innerHTML='';
-}
-document.getElementById('overlayGenerico').addEventListener('click', e=>{
-  if(e.target.id==='overlayGenerico') cerrarModal();
-});
-
-/* ======================================================================
-   MÓDULO PACIENTES
-====================================================================== */
-function opcionesEspecialistasHTML(seleccionId){
-  return ESPECIALISTAS.map(e=>`<option value="${e.id}" ${e.id===seleccionId?'selected':''}>${escapeHtml(e.nombre)} — ${escapeHtml(e.especialidad)}</option>`).join('');
-}
-function opcionesPacientesHTML(seleccionId){
-  return PACIENTES.map(p=>`<option value="${p.id}" ${p.id===seleccionId?'selected':''}>${escapeHtml(p.nombre)} (${escapeHtml(p.rut)})</option>`).join('');
-}
-
-function abrirModalPaciente(id){
-  const p = id ? PACIENTES.find(x=>x.id===id) : null;
-  abrirModal(`
-    <div class="modal-head"><h3>${p?'Editar paciente':'Nuevo paciente'}</h3><button class="cerrar-x" onclick="cerrarModal()">&#10005;</button></div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="campo full"><label>Nombre completo <span class="req">*</span></label><input id="fNombre" value="${p?escapeHtml(p.nombre):''}" placeholder="Ej: Juan Pérez López"></div>
-        <div class="campo"><label>RUT <span class="req">*</span></label><input id="fRut" value="${p?escapeHtml(p.rut):''}" placeholder="12.345.678-9"></div>
-        <div class="campo"><label>Fecha de nacimiento</label><input type="date" id="fNac" value="${p?p.fechaNacimiento||'':''}"></div>
-        <div class="campo"><label>Sexo</label><select id="fSexo">
-          <option ${p&&p.sexo==='Femenino'?'selected':''}>Femenino</option>
-          <option ${p&&p.sexo==='Masculino'?'selected':''}>Masculino</option>
-          <option ${p&&p.sexo==='Otro'?'selected':''}>Otro</option>
-        </select></div>
-        <div class="campo"><label>Previsión</label><select id="fPrevision">
-          <option ${p&&p.prevision==='FONASA'?'selected':''}>FONASA</option>
-          <option ${p&&p.prevision==='ISAPRE'?'selected':''}>ISAPRE</option>
-          <option ${p&&p.prevision==='Particular'?'selected':''}>Particular</option>
-        </select></div>
-        <div class="campo"><label>Teléfono</label><input id="fTelefono" value="${p?escapeHtml(p.telefono||''):''}" placeholder="+56 9 ..."></div>
-        <div class="campo"><label>Email</label><input id="fEmail" value="${p?escapeHtml(p.email||''):''}" placeholder="correo@ejemplo.cl"></div>
-        <div class="campo full"><label>Dirección</label><input id="fDireccion" value="${p?escapeHtml(p.direccion||''):''}"></div>
-        <div class="campo"><label>Grupo sanguíneo</label><input id="fGrupo" value="${p?escapeHtml(p.grupoSanguineo||''):''}" placeholder="Ej: O+"></div>
-        <div class="campo"><label>Contacto de emergencia</label><input id="fEmergencia" value="${p?escapeHtml(p.contactoEmergencia||''):''}" placeholder="Nombre y teléfono"></div>
-        <div class="campo full"><label>Alergias</label><input id="fAlergias" value="${p?escapeHtml(p.alergias||''):''}" placeholder="Ej: Penicilina, ninguna conocida..."></div>
-        <div class="campo full"><label>Antecedentes médicos</label><textarea id="fAntecedentes">${p?escapeHtml(p.antecedentes||''):''}</textarea></div>
-        <div class="campo full"><label>Medicamentos habituales</label><textarea id="fMedHabituales">${p?escapeHtml(p.medicamentosHabituales||''):''}</textarea></div>
+function login(){
+  root().innerHTML = `
+  <div class="login">
+    <div class="login-card">
+      <div class="logo">
+        <div class="logo-stripe"><img src="https://res.cloudinary.com/dway4iqeh/image/upload/v1783821452/footline_m0srtn.png" alt="Footline"></div>
       </div>
-      <div class="form-acciones">
-        <button class="btn btn-linea" onclick="cerrarModal()">Cancelar</button>
-        <button class="btn btn-primario" onclick="guardarPaciente('${p?p.id:''}')">${p?'Guardar cambios':'Crear paciente'}</button>
+      <p class="lead">Elige un usuario de prueba para entrar</p>
+      <div class="userlist">
+        ${USERS.map((u,i)=>`
+          <button class="userbtn" onclick="doLogin(${i})">
+            <div class="av" style="background:${u.av}">${u.name.split(' ').map(w=>w[0]).slice(0,2).join('')}</div>
+            <div><div class="who">${u.name}</div><div class="em">${u.email}</div></div>
+            <span class="badge">${u.badge}</span>
+          </button>`).join('')}
       </div>
+      <div class="note">Demo funcional · datos de ejemplo · contraseña <b>password123</b></div>
     </div>
-  `);
+  </div>`;
 }
-function guardarPaciente(id){
-  const nombre = document.getElementById('fNombre').value.trim();
-  const rut = document.getElementById('fRut').value.trim();
-  if(!nombre || !rut){ toast('Nombre y RUT son obligatorios','error'); return; }
-  const datos = {
-    nombre, rut,
-    fechaNacimiento: document.getElementById('fNac').value,
-    sexo: document.getElementById('fSexo').value,
-    prevision: document.getElementById('fPrevision').value,
-    telefono: document.getElementById('fTelefono').value.trim(),
-    email: document.getElementById('fEmail').value.trim(),
-    direccion: document.getElementById('fDireccion').value.trim(),
-    grupoSanguineo: document.getElementById('fGrupo').value.trim(),
-    contactoEmergencia: document.getElementById('fEmergencia').value.trim(),
-    alergias: document.getElementById('fAlergias').value.trim(),
-    antecedentes: document.getElementById('fAntecedentes').value.trim(),
-    medicamentosHabituales: document.getElementById('fMedHabituales').value.trim(),
-  };
-  if(id){
-    const p = PACIENTES.find(x=>x.id===id);
-    Object.assign(p, datos);
-    toast('Paciente actualizado','exito');
-  }else{
-    PACIENTES.push(Object.assign({ id:uid('pac'), documentos:[], recetas:[], derivaciones:[], examenes:[], historial:[], licencias:[] }, datos));
-    toast('Paciente creado','exito');
+function doLogin(i){ S.user=USERS[i]; S.view='dashboard'; S.sedeFilter='all'; shell(); }
+function logout(){ S.user=null; login(); }
+
+function navItem(id,label,icon,badge){
+  return `<button class="${S.view===id?'active':''}" onclick="go('${id}')">${icon}&nbsp; ${label}${badge?`<span class="dot">${badge}</span>`:''}</button>`;
+}
+
+function shell(){
+  const u=S.user, unc=unconfirmedToday();
+  root().innerHTML = `
+  <div class="app">
+    <aside class="side">
+      <div class="brand">
+        <div class="brand-stripe"><img src="https://res.cloudinary.com/dway4iqeh/image/upload/v1783821452/footline_m0srtn.png" alt="Footline"></div>
+      </div>
+      <div class="navlabel">Operación</div>
+      <nav class="nav">
+        ${navItem('dashboard','Panel','◧')}
+        ${navItem('pacientes','Pacientes','◔')}
+        ${navItem('citas','Citas','◈', unc||'')}
+        ${navItem('ventas','Ventas','◇')}
+        ${navItem('recuperacion','Recuperación','◎')}
+      </nav>
+      <div class="navlabel">Finanzas</div>
+      <nav class="nav">
+        ${navItem('cuadratura','Cuadratura','▤')}
+        ${navItem('gastos','Gastos','▦')}
+        ${canBilling()?navItem('billing','Facturación','▧'):''}
+      </nav>
+      ${isSecretaria()?'':`<div class="navlabel">Datos</div><nav class="nav">${navItem('import','Importar Excel','▤')}</nav>`}
+      <div class="side-foot">
+        <div class="u"><div class="avatar">${u.name.split(' ').map(w=>w[0]).slice(0,2).join('')}</div>
+          <div><div class="who">${u.name.split(' ')[0]} ${u.name.split(' ')[1]||''}</div><div class="role">${u.role} · ${u.sede||'Todas las sedes'}</div></div></div>
+        <button class="switch" onclick="logout()">↺ Cambiar usuario</button>
+      </div>
+    </aside>
+    <main class="main" id="view"></main>
+  </div>`;
+  render();
+}
+
+function go(v){ S.view=v; S.detail=null; document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active')); shell(); }
+
+function topbar(title, sub, withFilter){
+  let filter='';
+  if(withFilter && !isSecretaria()){
+    filter=`<div class="sedefilter">
+      <button class="${S.sedeFilter==='all'?'on':''}" onclick="setFilter('all')">Todas</button>
+      ${SEDES.map(s=>`<button class="${S.sedeFilter===s?'on':''}" onclick="setFilter('${s}')">${s}</button>`).join('')}
+    </div>`;
   }
-  persistTodo();
-  cerrarModal();
-  renderPacientes();
-  renderDashboard();
+  return `<div class="top"><div><h1>${title}</h1><div class="date">${sub}</div></div>${filter}</div>`;
 }
-function eliminarPaciente(id){
-  if(!confirm('¿Eliminar este paciente y toda su ficha médica? Esta acción no se puede deshacer.')) return;
-  PACIENTES = PACIENTES.filter(p=>p.id!==id);
-  CITAS = CITAS.filter(c=>c.pacienteId!==id);
-  persistTodo();
-  renderPacientes();
-  renderDashboard();
-  toast('Paciente eliminado','exito');
+function setFilter(s){ S.sedeFilter=s; S.patientPage=0; render(); }
+
+function render(){
+  const v=document.getElementById('view'); if(!v) return;
+  ({dashboard:vDashboard, pacientes:vPacientes, citas:vCitas, ventas:vVentas,
+    recuperacion:vRecuperacion, cuadratura:vCuadratura, gastos:vGastos, billing:vBilling, import:vImport}[S.view]||vDashboard)(v);
 }
 
-function ultimaAtencion(p){
-  if(!p.historial || !p.historial.length) return '—';
-  const ord = [...p.historial].sort((a,b)=> b.fecha.localeCompare(a.fecha));
-  return fmtFecha(ord[0].fecha);
+/* ---- DASHBOARD ---- */
+function vDashboard(v){
+  const sedes=visibleSedes();
+  const salesScope=DB.sales.filter(s=>sedes.includes(s.sede));
+  const ingHoy=salesScope.filter(s=>s.fecha===todayStr()).reduce((a,s)=>a+s.monto,0);
+  const pac=DB.patients.filter(p=>sedes.includes(p.sede)).length;
+  const citasHoy=DB.appointments.filter(a=>a.fecha===todayStr()&&sedes.includes(a.sede));
+  const deuda=DB.debts.filter(d=>sedes.includes(d.sede)&&d.estado==='activa').reduce((a,d)=>a+d.monto,0);
+  const first=S.user.name.split(' ')[0];
+
+  const sedeCards = sedes.map(sd=>{
+    const ing=DB.sales.filter(s=>s.sede===sd).reduce((a,s)=>a+s.monto,0);
+    const np=DB.patients.filter(p=>p.sede===sd).length;
+    return `<div class="sede">
+      <div class="tag"><span class="sw" style="background:${SEDE_COLOR[sd]}"></span>${sd}</div>
+      <div class="big">${money(ing)}</div><div class="cap">Ingresos acumulados</div>
+      <div class="row"><span>${np} pacientes</span><b>${sd==='KMOTION'?'<span style="color:var(--gold)">Nueva</span>':'activa'}</b></div>
+    </div>`;
+  }).join('');
+
+  const agenda = citasHoy.filter(a=>a.estado!=='confirmada').slice(0,6).map(a=>`
+    <div class="apt"><span class="time">${a.hora}</span>
+      <div><div class="who">${a.paciente}</div><div class="meta">${a.sede} · ${a.motivo}</div></div>
+      <div class="actions"><span class="pill ${a.estado==='sin_confirmar'?'risk':'wait'}">${a.estado==='sin_confirmar'?'Sin confirmar':'Pendiente'}</span>
+      <button class="btn sm" onclick="confirmApt(${a.id})">Confirmar</button></div>
+    </div>`).join('') || `<div class="empty"><div class="em-ic">✓</div><h4>Todo confirmado</h4><p>No quedan citas pendientes por hoy.</p></div>`;
+
+  v.innerHTML = topbar(`Buenos días, ${first}`, `${new Date().toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long'})} · ${isSecretaria()?'Sede '+S.user.sede:'Vista consolidada'}`, true)
+  + `<section class="sedes">${sedeCards}</section>
+  <section class="kpis">
+    <div class="kpi"><div class="lbl">Ingresos hoy</div><div class="num">${money(ingHoy)}</div><div class="delta up">▲ ventas del día</div></div>
+    <div class="kpi"><div class="lbl">Pacientes activos</div><div class="num">${pac}</div><div class="delta up">en cartera</div></div>
+    <div class="kpi"><div class="lbl">Citas hoy</div><div class="num">${citasHoy.length}</div><div class="delta down">${citasHoy.filter(a=>a.estado!=='confirmada').length} por confirmar</div></div>
+    <div class="kpi"><div class="lbl">Por recuperar</div><div class="num">${money(deuda)}</div><div class="delta down">${DB.debts.filter(d=>sedes.includes(d.sede)&&d.estado==='activa').length} deudas</div></div>
+  </section>
+  ${sedePerfBlock()}
+  <div class="grid2">
+    <div class="card"><div class="head"><h3>Ingresos últimos 7 días</h3></div>${sparkChart(salesScope)}</div>
+    <div class="card"><div class="head"><h3>Citas por confirmar · hoy</h3><a href="#" onclick="go('citas');return false">Agenda →</a></div>${agenda}</div>
+  </div>`;
 }
 
-function renderPacientes(){
-  const q = (document.getElementById('buscarPaciente').value||'').toLowerCase();
-  const filtrados = PACIENTES.filter(p => p.nombre.toLowerCase().includes(q) || (p.rut||'').toLowerCase().includes(q));
-  const tbody = document.getElementById('tablaPacientes');
-  if(!filtrados.length){
-    tbody.innerHTML = `<tr><td colspan="7"><div class="vacio"><div class="ico-vacio">&#128100;</div>No hay pacientes${q?' que coincidan con la búsqueda':' registrados aún'}.<div class="centrar"><button class="btn btn-primario btn-sm" onclick="abrirModalPaciente()">+ Registrar primer paciente</button></div></div></td></tr>`;
-    return;
-  }
-  tbody.innerHTML = filtrados.map(p=>`
-    <tr>
-      <td style="display:flex;align-items:center;gap:10px;">
-        <div class="avatar-paciente" style="width:34px;height:34px;font-size:12px;">${iniciales(p.nombre)}</div>
-        <div><b>${escapeHtml(p.nombre)}</b></div>
-      </td>
-      <td>${escapeHtml(p.rut)}</td>
-      <td>${edadDesde(p.fechaNacimiento)}</td>
-      <td><span class="badge badge-azul">${escapeHtml(p.prevision||'—')}</span></td>
-      <td>${escapeHtml(p.telefono||'—')}</td>
-      <td>${ultimaAtencion(p)}</td>
-      <td><div class="fila-acciones">
-        <button class="btn btn-icono" title="Ver ficha" onclick="abrirFichaPaciente('${p.id}')">&#128196;</button>
-        <button class="btn btn-icono" title="Editar" onclick="abrirModalPaciente('${p.id}')">&#9998;</button>
-        <button class="btn btn-icono" title="Eliminar" onclick="eliminarPaciente('${p.id}')">&#128465;</button>
-      </div></td>
-    </tr>
-  `).join('');
+function sedePerfBlock(){
+  const sedes=visibleSedes();
+  if(sedes.length<2) return ''; // comparación solo tiene sentido con 2+ sedes (no para secretarias)
+  const rows=sedes.map(sd=>{
+    const sales=DB.sales.filter(s=>s.sede===sd);
+    const ing=sales.reduce((a,s)=>a+s.monto,0);
+    const ventas=sales.length;
+    const ticket=ventas?ing/ventas:0;
+    const cit=DB.appointments.filter(a=>a.sede===sd);
+    const conf=cit.length?Math.round(cit.filter(a=>a.estado==='confirmada').length/cit.length*100):0;
+    const pac=DB.patients.filter(p=>p.sede===sd).length;
+    const deuda=DB.debts.filter(d=>d.sede===sd&&d.estado==='activa').reduce((a,d)=>a+d.monto,0);
+    return {sd,ing,ventas,ticket,conf,pac,deuda};
+  }).sort((a,b)=>b.ing-a.ing);
+  const totalIng=rows.reduce((a,r)=>a+r.ing,0)||1;
+  const maxIng=Math.max(...rows.map(r=>r.ing),1);
+  const leader=rows[0];
+  const confClass=c=>c>=80?'ok':c>=60?'wait':'risk';
+  return `<div class="card" style="margin-bottom:16px">
+    <div class="head"><h3>Rendimiento por sede</h3>
+      <span style="font-size:12px;color:var(--muted)">${leader.sd} lidera con ${Math.round(leader.ing/totalIng*100)}% de los ingresos</span></div>
+    <table class="perf"><thead><tr>
+      <th>Sede</th><th>Ingresos</th><th>Pacientes</th><th>Ticket prom.</th><th>Confirmación</th><th>Por recuperar</th></tr></thead><tbody>
+      ${rows.map((r,i)=>`<tr>
+        <td><span class="pill" style="background:${SEDE_COLOR[r.sd]}22;color:${SEDE_COLOR[r.sd]}">${r.sd}</span>${i===0?' <span class="pill ok" style="margin-left:4px">Líder</span>':''}</td>
+        <td class="bar-cell"><b>${money(r.ing)}</b> <small style="color:var(--faint)">${Math.round(r.ing/totalIng*100)}%</small>
+          <div class="bar-track"><div class="bar-fill" style="width:${Math.round(r.ing/maxIng*100)}%;background:${SEDE_COLOR[r.sd]}"></div></div></td>
+        <td>${r.pac}</td>
+        <td>${money(r.ticket)}</td>
+        <td><span class="pill ${confClass(r.conf)}">${r.conf}%</span></td>
+        <td class="down">${r.deuda?money(r.deuda):'—'}</td>
+      </tr>`).join('')}
+    </tbody></table></div>`;
 }
 
-/* ---------- Ficha completa del paciente (modal ancho con tabs) ---------- */
-let PACIENTE_ACTIVO_ID = null;
-function abrirFichaPaciente(id){
-  PACIENTE_ACTIVO_ID = id;
-  const p = PACIENTES.find(x=>x.id===id);
-  if(!p) return;
-  abrirModal(`
-    <div class="modal-head">
-      <h3>Ficha médica</h3>
-      <button class="cerrar-x" onclick="cerrarModal()">&#10005;</button>
+function sparkChart(sales){
+  const days=[6,5,4,3,2,1,0].map(d=>{ const f=daysAgo(d); return sales.filter(s=>s.fecha===f).reduce((a,s)=>a+s.monto,0); });
+  const max=Math.max(...days,1);
+  const pts=days.map((val,i)=>`${20+i*85},${180-(val/max)*140}`).join(' ');
+  const area=`20,180 ${pts} ${20+6*85},180`;
+  const labels=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+  return `<svg width="100%" height="200" viewBox="0 0 560 200" preserveAspectRatio="none">
+    <polyline points="${area}" fill="#D8E8F3" opacity=".5"/>
+    <polyline points="${pts}" fill="none" stroke="#1B5D8C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    ${days.map((v,i)=>`<circle cx="${20+i*85}" cy="${180-(v/max)*140}" r="3.5" fill="#1B5D8C"/>`).join('')}
+  </svg>
+  <div style="display:flex;justify-content:space-between;color:var(--faint);font-size:11px;margin-top:4px">${labels.map(l=>`<span>${l}</span>`).join('')}</div>`;
+}
+
+/* ---- PACIENTES ---- */
+function vPacientes(v){
+  if(S.detail){ return patientDetail(v); }
+  const sedes=visibleSedes();
+  let list=DB.patients.filter(p=>sedes.includes(p.sede));
+  if(S.patientQuery){ const q=S.patientQuery.toLowerCase(); list=list.filter(p=>p.nombre.toLowerCase().includes(q)||p.rut.includes(q)); }
+  const per=8, pages=Math.max(1,Math.ceil(list.length/per));
+  if(S.patientPage>=pages) S.patientPage=0;
+  const slice=list.slice(S.patientPage*per,(S.patientPage+1)*per);
+
+  v.innerHTML = topbar('Pacientes', `${list.length} en cartera${isSecretaria()?' · '+S.user.sede:''}`, false)
+  + `<div class="toolbar">
+      <div class="search">🔎<input placeholder="Buscar por nombre o RUT…" value="${S.patientQuery}" oninput="searchPatient(this.value)"></div>
+      <button class="btn" onclick="modalNuevoPaciente()">＋ Nuevo paciente</button>
     </div>
-    <div class="modal-body">
-      <div class="ficha-header">
-        <div class="avatar-paciente">${iniciales(p.nombre)}</div>
-        <div>
-          <div class="nombre">${escapeHtml(p.nombre)}</div>
-          <div class="meta">${escapeHtml(p.rut)} · ${edadDesde(p.fechaNacimiento)} · ${escapeHtml(p.sexo||'—')} · <span class="badge badge-azul">${escapeHtml(p.prevision||'—')}</span></div>
+    <div class="card" style="padding:8px 0 14px">
+      <table><thead><tr><th>Paciente</th><th>RUT</th><th>Sede</th><th>Edad</th><th>Última visita</th><th></th></tr></thead><tbody>
+      ${slice.map(p=>`<tr class="clickable" onclick="openPatient(${p.id})">
+        <td><b>${p.nombre}</b></td><td>${p.rut}</td>
+        <td><span class="pill" style="background:${SEDE_COLOR[p.sede]}22;color:${SEDE_COLOR[p.sede]}">${p.sede}</span></td>
+        <td>${p.edad}</td><td>${p.ultima}</td><td style="text-align:right;color:var(--faint)">›</td></tr>`).join('')}
+      </tbody></table>
+      ${slice.length===0?'<div class="empty"><div class="em-ic">◔</div><h4>Sin resultados</h4><p>Ajusta la búsqueda o agrega un paciente.</p></div>':''}
+      <div class="pager" style="padding:0 14px">
+        <span>Página ${S.patientPage+1} de ${pages}</span>
+        <div style="display:flex;gap:8px">
+          <button onclick="pPage(-1)" ${S.patientPage===0?'disabled':''}>‹ Anterior</button>
+          <button onclick="pPage(1)" ${S.patientPage>=pages-1?'disabled':''}>Siguiente ›</button>
         </div>
       </div>
-      <div class="tabs" id="fichaTabs">
-        <button class="tab-btn activo" data-tab="datos">Datos</button>
-        <button class="tab-btn" data-tab="historial">Historial</button>
-        <button class="tab-btn" data-tab="recetas">Recetas</button>
-        <button class="tab-btn" data-tab="derivaciones">Derivaciones</button>
-        <button class="tab-btn" data-tab="examenes">Exámenes</button>
-        <button class="tab-btn" data-tab="licencias">Licencias</button>
-        <button class="tab-btn" data-tab="documentos">Documentos</button>
-      </div>
-      <div id="fichaContenido"></div>
-    </div>
-  `, true);
-  document.getElementById('fichaTabs').addEventListener('click', e=>{
-    const b = e.target.closest('.tab-btn'); if(!b) return;
-    document.querySelectorAll('#fichaTabs .tab-btn').forEach(x=>x.classList.remove('activo'));
-    b.classList.add('activo');
-    renderTabFicha(b.dataset.tab);
-  });
-  renderTabFicha('datos');
+    </div>`;
 }
-function nombreEsp(id){ const e = ESPECIALISTAS.find(x=>x.id===id); return e?e.nombre:'—'; }
+function searchPatient(q){ S.patientQuery=q; S.patientPage=0; render(); const inp=document.querySelector('.search input'); if(inp){inp.focus(); inp.setSelectionRange(inp.value.length,inp.value.length);} }
+function pPage(d){ S.patientPage+=d; render(); }
+function openPatient(id){ S.detail=DB.patients.find(p=>p.id===id); S.patientTab='datos'; render(); }
 
-function renderTabFicha(tab){
-  const p = PACIENTES.find(x=>x.id===PACIENTE_ACTIVO_ID);
-  const cont = document.getElementById('fichaContenido');
-  if(!p || !cont) return;
+function patientDetail(v){
+  const p=S.detail;
+  const tabs=[['datos','Ficha'],['historial','Historial'],['recetas','Recetas'],['derivaciones','Derivaciones'],['examenes','Exámenes'],['licencias','Licencias'],['documentos','Documentos']];
+  v.innerHTML = `<div class="top"><div><h1>${p.nombre}</h1><div class="date">${p.rut} · ${p.edad} años · ${p.telefono} · <span class="pill" style="background:${SEDE_COLOR[p.sede]}22;color:${SEDE_COLOR[p.sede]}">${p.sede}</span></div></div>
+    <div style="display:flex;gap:8px"><button class="btn ghost" onclick="modalNuevaCita(${p.id})">＋ Agendar cita</button><button class="btn ghost" onclick="backPatients()">‹ Volver</button></div></div>
+    <div class="ftabs">${tabs.map(([id,label])=>`<button class="ftab ${S.patientTab===id?'on':''}" onclick="setPatientTab('${id}')">${label}</button>`).join('')}</div>
+    <div id="ficha-content">${renderFichaTab(p, S.patientTab)}</div>`;
+}
+function setPatientTab(tab){ S.patientTab=tab; render(); }
+function backPatients(){ S.detail=null; render(); }
+function eliminarSub(pid, campo, itemId){
+  const p=DB.patients.find(x=>x.id===pid); if(!p) return;
+  p[campo]=p[campo].filter(it=>it.id!==itemId);
+  toast('Registro eliminado'); render();
+}
+function campoFicha(label,val){ return `<div class="campo-ficha"><span class="et">${label}</span><b>${val||'—'}</b></div>`; }
 
+function renderFichaTab(p,tab){
   if(tab==='datos'){
-    cont.innerHTML = `
-      <div class="info-lista">
-        <div class="fila"><b>Fecha de nacimiento</b><span class="val">${fmtFecha(p.fechaNacimiento)}</span></div>
-        <div class="fila"><b>Teléfono</b><span class="val">${escapeHtml(p.telefono||'—')}</span></div>
-        <div class="fila"><b>Email</b><span class="val">${escapeHtml(p.email||'—')}</span></div>
-        <div class="fila"><b>Dirección</b><span class="val">${escapeHtml(p.direccion||'—')}</span></div>
-        <div class="fila"><b>Grupo sanguíneo</b><span class="val">${escapeHtml(p.grupoSanguineo||'—')}</span></div>
-        <div class="fila"><b>Contacto de emergencia</b><span class="val">${escapeHtml(p.contactoEmergencia||'—')}</span></div>
-        <div class="fila" style="grid-column:1/-1;"><b>Alergias</b><span class="val">${escapeHtml(p.alergias||'Ninguna registrada')}</span></div>
-        <div class="fila" style="grid-column:1/-1;"><b>Antecedentes médicos</b><span class="val">${escapeHtml(p.antecedentes||'—')}</span></div>
-        <div class="fila" style="grid-column:1/-1;"><b>Medicamentos habituales</b><span class="val">${escapeHtml(p.medicamentosHabituales||'—')}</span></div>
+    return `<div class="card">
+      <div class="head"><h3>Datos de la ficha</h3><button class="btn sm ghost" onclick="modalEditarFicha(${p.id})">✎ Editar ficha</button></div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px 24px">
+        ${campoFicha('Fecha de nacimiento', p.fechaNacimiento)}
+        ${campoFicha('Sexo', p.sexo)}
+        ${campoFicha('Previsión', p.prevision)}
+        ${campoFicha('Grupo sanguíneo', p.grupoSanguineo)}
+        ${campoFicha('Dirección', p.direccion)}
+        ${campoFicha('Contacto de emergencia', p.contactoEmergencia)}
+        <div style="grid-column:1/-1">${campoFicha('Alergias', p.alergias||'Ninguna registrada')}</div>
+        <div style="grid-column:1/-1">${campoFicha('Antecedentes médicos', p.antecedentes)}</div>
+        <div style="grid-column:1/-1">${campoFicha('Medicamentos habituales', p.medicamentosHabituales)}</div>
       </div>
-      <div class="form-acciones"><button class="btn btn-secundario" onclick="abrirModalPaciente('${p.id}')">&#9998; Editar datos</button></div>
-    `;
+    </div>`;
   }
 
   if(tab==='historial'){
-    cont.innerHTML = `
-      <div class="panel-head" style="margin-bottom:10px;"><span class="sub">${p.historial.length} atención(es) registradas</span><button class="btn btn-primario btn-sm" onclick="abrirModalHistorial()">+ Nueva atención</button></div>
-      <div class="mini-lista">${p.historial.length ? [...p.historial].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(h=>`
-        <div class="mini-item">
-          <div class="cab"><span>${fmtFecha(h.fecha)} · ${escapeHtml(nombreEsp(h.especialistaId))}</span><button class="btn btn-icono" onclick="eliminarSub('historial','${h.id}')">&#128465;</button></div>
-          <div class="cuerpo"><b>Motivo:</b> ${escapeHtml(h.motivo)}<br><b>Diagnóstico:</b> ${escapeHtml(h.diagnostico||'—')}<br><b>Tratamiento:</b> ${escapeHtml(h.tratamiento||'—')}</div>
-        </div>`).join('') : '<div class="vacio">Sin atenciones registradas.</div>'}</div>
-    `;
+    const items=[...p.historial].sort((a,b)=>a.fecha<b.fecha?1:-1);
+    return `<div class="card"><div class="head"><h3>Historial clínico</h3><button class="btn sm" onclick="modalSesion(${p.id})">＋ Nueva atención</button></div>
+      ${items.length?items.map(h=>`
+        <div class="reg-item"><div class="rhead"><span>${h.fecha} · ${h.pro}</span><span class="racc"><button class="btn sm ghost" onclick="eliminarSub(${p.id},'historial',${h.id})">✕</button></span></div>
+        <div class="rbody"><b>Motivo:</b> ${h.motivo}${h.diagnostico?`<br><b>Diagnóstico:</b> ${h.diagnostico}`:''}${h.tratamiento?`<br><b>Tratamiento:</b> ${h.tratamiento}`:''}</div></div>`).join('')
+        :'<div class="empty"><div class="em-ic">◔</div><h4>Sin atenciones registradas</h4></div>'}
+    </div>`;
   }
 
   if(tab==='recetas'){
-    cont.innerHTML = `
-      <div class="panel-head" style="margin-bottom:10px;"><span class="sub">${p.recetas.length} receta(s)</span><button class="btn btn-primario btn-sm" onclick="abrirModalReceta()">+ Nueva receta</button></div>
-      <div class="mini-lista">${p.recetas.length ? [...p.recetas].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(r=>`
-        <div class="mini-item">
-          <div class="cab"><span>${fmtFecha(r.fecha)} · ${escapeHtml(nombreEsp(r.especialistaId))}</span>
-            <span style="display:flex;gap:4px;">
-              <button class="btn btn-icono" title="Imprimir receta" onclick="imprimirReceta('${r.id}')">&#128424;</button>
-              <button class="btn btn-icono" title="Eliminar" onclick="eliminarSub('recetas','${r.id}')">&#128465;</button>
-            </span>
-          </div>
-          <div class="cuerpo"><b>${escapeHtml(r.medicamento)}</b> — ${escapeHtml(r.dosis)}<br>${escapeHtml(r.indicaciones||'')}</div>
-        </div>`).join('') : '<div class="vacio">Sin recetas registradas.</div>'}</div>
-    `;
+    const items=[...p.recetas].sort((a,b)=>a.fecha<b.fecha?1:-1);
+    return `<div class="card"><div class="head"><h3>Recetas médicas</h3><button class="btn sm" onclick="modalReceta(${p.id})">＋ Nueva receta</button></div>
+      ${items.length?items.map(r=>`
+        <div class="reg-item"><div class="rhead"><span>${r.fecha} · ${r.pro}</span>
+          <span class="racc"><button class="btn sm ghost" onclick="imprimirReceta(${p.id},${r.id})" title="Imprimir">🖨</button><button class="btn sm ghost" onclick="eliminarSub(${p.id},'recetas',${r.id})">✕</button></span></div>
+        <div class="rbody"><b>${r.medicamento}</b> — ${r.dosis}${r.indicaciones?`<br>${r.indicaciones}`:''}</div></div>`).join('')
+        :'<div class="empty"><div class="em-ic">℞</div><h4>Sin recetas registradas</h4></div>'}
+    </div>`;
   }
 
   if(tab==='derivaciones'){
-    cont.innerHTML = `
-      <div class="panel-head" style="margin-bottom:10px;"><span class="sub">${p.derivaciones.length} derivación(es)</span><button class="btn btn-primario btn-sm" onclick="abrirModalDerivacion()">+ Nueva derivación</button></div>
-      <div class="mini-lista">${p.derivaciones.length ? [...p.derivaciones].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(d=>`
-        <div class="mini-item">
-          <div class="cab"><span>${fmtFecha(d.fecha)} · De ${escapeHtml(nombreEsp(d.especialistaOrigenId))} a ${escapeHtml(d.especialidadDestino)}</span><button class="btn btn-icono" onclick="eliminarSub('derivaciones','${d.id}')">&#128465;</button></div>
-          <div class="cuerpo"><b>Motivo:</b> ${escapeHtml(d.motivo)}</div>
-        </div>`).join('') : '<div class="vacio">Sin derivaciones registradas.</div>'}</div>
-    `;
+    const items=[...p.derivaciones].sort((a,b)=>a.fecha<b.fecha?1:-1);
+    return `<div class="card"><div class="head"><h3>Derivaciones</h3><button class="btn sm" onclick="modalDerivacion(${p.id})">＋ Nueva derivación</button></div>
+      ${items.length?items.map(d=>`
+        <div class="reg-item"><div class="rhead"><span>${d.fecha} · De ${d.pro} a ${d.destino}</span><span class="racc"><button class="btn sm ghost" onclick="eliminarSub(${p.id},'derivaciones',${d.id})">✕</button></span></div>
+        <div class="rbody"><b>Motivo:</b> ${d.motivo||'—'}</div></div>`).join('')
+        :'<div class="empty"><div class="em-ic">↷</div><h4>Sin derivaciones registradas</h4></div>'}
+    </div>`;
   }
 
   if(tab==='examenes'){
-    cont.innerHTML = `
-      <div class="panel-head" style="margin-bottom:10px;"><span class="sub">${p.examenes.length} examen(es)</span><button class="btn btn-primario btn-sm" onclick="abrirModalExamen()">+ Nuevo examen</button></div>
-      <div class="mini-lista">${p.examenes.length ? [...p.examenes].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(x=>`
-        <div class="mini-item">
-          <div class="cab"><span>${fmtFecha(x.fecha)} · ${escapeHtml(x.tipo)}</span><button class="btn btn-icono" onclick="eliminarSub('examenes','${x.id}')">&#128465;</button></div>
-          <div class="cuerpo">${escapeHtml(x.resultado||'Resultado pendiente')} ${x.archivo?`<br><a href="${x.archivo}" download="examen_${x.id}" style="color:var(--azul-700);font-weight:700;">&#128206; Ver archivo adjunto</a>`:''}</div>
-        </div>`).join('') : '<div class="vacio">Sin exámenes registrados.</div>'}</div>
-    `;
+    const items=[...p.examenes].sort((a,b)=>a.fecha<b.fecha?1:-1);
+    return `<div class="card"><div class="head"><h3>Exámenes</h3><button class="btn sm" onclick="modalExamen(${p.id})">＋ Nuevo examen</button></div>
+      ${items.length?items.map(x=>`
+        <div class="reg-item"><div class="rhead"><span>${x.fecha} · ${x.tipo}</span><span class="racc"><button class="btn sm ghost" onclick="eliminarSub(${p.id},'examenes',${x.id})">✕</button></span></div>
+        <div class="rbody">${x.resultado||'Resultado pendiente'}${x.archivo?`<br><a href="${x.archivo}" download="examen_${x.id}" style="color:var(--pine);font-weight:700">📎 Ver archivo adjunto</a>`:''}</div></div>`).join('')
+        :'<div class="empty"><div class="em-ic">▤</div><h4>Sin exámenes registrados</h4></div>'}
+    </div>`;
   }
 
   if(tab==='licencias'){
-    cont.innerHTML = `
-      <div class="panel-head" style="margin-bottom:10px;"><span class="sub">${p.licencias.length} licencia(s)</span><button class="btn btn-primario btn-sm" onclick="abrirModalLicencia()">+ Nueva licencia</button></div>
-      <div class="mini-lista">${p.licencias.length ? [...p.licencias].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(l=>`
-        <div class="mini-item">
-          <div class="cab"><span>${fmtFecha(l.fecha)} · ${l.dias} día(s)</span>
-            <span style="display:flex;gap:4px;">
-              <button class="btn btn-icono" title="Imprimir licencia" onclick="imprimirLicencia('${l.id}')">&#128424;</button>
-              <button class="btn btn-icono" title="Eliminar" onclick="eliminarSub('licencias','${l.id}')">&#128465;</button>
-            </span>
-          </div>
-          <div class="cuerpo"><b>Diagnóstico:</b> ${escapeHtml(l.diagnostico)} ${l.archivo?`<br><a href="${l.archivo}" download="licencia_${l.id}" style="color:var(--azul-700);font-weight:700;">&#128206; Ver documento</a>`:''}</div>
-        </div>`).join('') : '<div class="vacio">Sin licencias registradas.</div>'}</div>
-    `;
+    const items=[...p.licencias].sort((a,b)=>a.fecha<b.fecha?1:-1);
+    return `<div class="card"><div class="head"><h3>Licencias médicas</h3><button class="btn sm" onclick="modalLicencia(${p.id})">＋ Nueva licencia</button></div>
+      ${items.length?items.map(l=>`
+        <div class="reg-item"><div class="rhead"><span>${l.fecha} · ${l.dias} día(s)</span>
+          <span class="racc"><button class="btn sm ghost" onclick="imprimirLicencia(${p.id},${l.id})" title="Imprimir">🖨</button><button class="btn sm ghost" onclick="eliminarSub(${p.id},'licencias',${l.id})">✕</button></span></div>
+        <div class="rbody"><b>Diagnóstico:</b> ${l.diagnostico}${l.archivo?`<br><a href="${l.archivo}" download="licencia_${l.id}" style="color:var(--pine);font-weight:700">📎 Ver documento</a>`:''}</div></div>`).join('')
+        :'<div class="empty"><div class="em-ic">🗎</div><h4>Sin licencias registradas</h4></div>'}
+    </div>`;
   }
 
   if(tab==='documentos'){
-    cont.innerHTML = `
-      <div class="panel-head" style="margin-bottom:10px;"><span class="sub">${p.documentos.length} documento(s) / imagen(es)</span>
-        <label class="btn btn-primario btn-sm" style="cursor:pointer;">+ Subir documento<input type="file" style="display:none;" id="inputDocPaciente" accept="image/*,.pdf,.doc,.docx" onchange="subirDocumentoPaciente(this)"></label>
+    return `<div class="card"><div class="head"><h3>Documentos e imágenes</h3>
+        <label class="btn sm" style="cursor:pointer">＋ Subir<input type="file" style="display:none" accept="image/*,.pdf,.doc,.docx" onchange="subirDocumento(${p.id},this)"></label>
       </div>
-      <div class="doc-grid">${p.documentos.length ? p.documentos.map(d=>`
+      <div class="doc-grid">${p.documentos.length?p.documentos.map(d=>`
         <div class="doc-item">
-          ${d.tipo && d.tipo.startsWith('image') ? `<img src="${d.data}">` : `<div class="doc-ico">&#128196;</div>`}
-          <div class="doc-info"><div class="nombre" title="${escapeHtml(d.nombre)}">${escapeHtml(d.nombre)}</div><div style="color:var(--texto-400);">${fmtFecha(d.fecha)}</div></div>
-          <div class="doc-acc"><a href="${d.data}" download="${escapeHtml(d.nombre)}" class="btn btn-icono" style="width:26px;height:26px;font-size:12px;">&#8615;</a><button class="btn btn-icono" style="width:26px;height:26px;font-size:12px;" onclick="eliminarSub('documentos','${d.id}')">&#128465;</button></div>
-        </div>`).join('') : '<div class="vacio" style="grid-column:1/-1;">Aún no se han subido documentos.</div>'}</div>
-    `;
+          ${d.tipo && d.tipo.startsWith('image')?`<img src="${d.data}">`:'<div class="doc-ico">▤</div>'}
+          <div class="doc-info"><b title="${d.nombre}">${d.nombre}</b><span style="color:var(--faint)">${d.fecha}</span></div>
+          <div class="doc-acc"><a href="${d.data}" download="${d.nombre}" class="btn sm ghost" style="padding:3px 8px">↓</a><button class="btn sm ghost" style="padding:3px 8px" onclick="eliminarSub(${p.id},'documentos',${d.id})">✕</button></div>
+        </div>`).join('') : '<div class="empty" style="grid-column:1/-1"><div class="em-ic">▤</div><h4>Sin documentos cargados</h4></div>'}</div>
+    </div>`;
   }
 }
 
-function subirDocumentoPaciente(input){
-  const file = input.files[0];
-  if(!file) return;
-  if(file.size > 4*1024*1024){ toast('El archivo supera 4MB. Elige uno más liviano.','error'); return; }
-  const reader = new FileReader();
-  reader.onload = function(e){
-    const p = PACIENTES.find(x=>x.id===PACIENTE_ACTIVO_ID);
-    p.documentos.push({ id:uid('doc'), nombre:file.name, tipo:file.type, fecha:hoyISO(), data:e.target.result });
-    persistTodo();
-    renderTabFicha('documentos');
-    renderPacientes();
-    toast('Documento cargado','exito');
+/* ---- CITAS ---- */
+function vCitas(v){
+  const sedes=visibleSedes();
+  const list=DB.appointments.filter(a=>sedes.includes(a.sede));
+  const byDay={};
+  list.forEach(a=>{ (byDay[a.fecha]=byDay[a.fecha]||[]).push(a); });
+  const days=Object.keys(byDay).sort();
+
+  v.innerHTML = topbar('Citas', `Agenda por sede y profesional`, true)
+  + `<div class="toolbar"><div style="flex:1"></div><button class="btn" onclick="modalNuevaCita()">＋ Nueva cita</button></div>`
+  + days.map(d=>`
+    <div class="card" style="margin-bottom:14px">
+      <div class="head"><h3>${d===todayStr()?'Hoy · '+d:d}</h3><span style="color:var(--faint);font-size:12px">${byDay[d].length} citas</span></div>
+      ${byDay[d].sort((a,b)=>a.hora<b.hora?-1:1).map(a=>`
+        <div class="apt"><span class="time">${a.hora}</span>
+          <div><div class="who">${a.paciente}</div><div class="meta">${a.sede} · ${a.pro} · ${a.motivo}</div></div>
+          <div class="actions">
+            <span class="pill ${a.estado==='confirmada'?'ok':a.estado==='pendiente'?'wait':'risk'}">${a.estado==='confirmada'?'Confirmada':a.estado==='pendiente'?'Pendiente':'Sin confirmar'}</span>
+            ${a.estado!=='confirmada'?`<button class="btn sm" onclick="confirmApt(${a.id})">Confirmar</button>`:`<button class="btn sm ghost" onclick="cancelApt(${a.id})">Anular</button>`}
+          </div></div>`).join('')}
+    </div>`).join('') || `<div class="empty"><div class="em-ic">◈</div><h4>Sin citas</h4><p>Agenda la primera cita del día.</p></div>`;
+}
+function confirmApt(id){ const a=DB.appointments.find(x=>x.id===id); if(a){a.estado='confirmada'; toast('Cita confirmada ✓'); shell();} }
+function cancelApt(id){ const a=DB.appointments.find(x=>x.id===id); if(a){a.estado='sin_confirmar'; toast('Cita anulada'); render();} }
+
+/* ---- VENTAS ---- */
+function vVentas(v){
+  const sedes=visibleSedes();
+  const list=DB.sales.filter(s=>sedes.includes(s.sede));
+  const total=list.reduce((a,s)=>a+s.monto,0);
+  const pend=list.filter(s=>s.pago==='pendiente').reduce((a,s)=>a+s.monto,0);
+  v.innerHTML = topbar('Ventas', `${list.length} atenciones · ${money(total)} facturado`, true)
+  + `<div class="kpis" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="kpi"><div class="lbl">Total facturado</div><div class="num">${money(total)}</div></div>
+      <div class="kpi"><div class="lbl">Pagado</div><div class="num">${money(total-pend)}</div><div class="delta up">al día</div></div>
+      <div class="kpi"><div class="lbl">Pendiente</div><div class="num">${money(pend)}</div><div class="delta down">por cobrar</div></div>
+    </div>
+    <div class="toolbar"><div style="flex:1"></div><button class="btn" onclick="modalNuevaVenta()">＋ Registrar venta</button></div>
+    <div class="card" style="padding:8px 0 8px"><table><thead><tr><th>Fecha</th><th>Paciente</th><th>Servicio</th><th>Sede</th><th>Monto</th><th>Pago</th></tr></thead><tbody>
+      ${list.slice(0,30).map(s=>`<tr>
+        <td>${s.fecha}</td><td><b>${s.paciente}</b></td><td>${s.servicio}</td>
+        <td><span class="pill" style="background:${SEDE_COLOR[s.sede]}22;color:${SEDE_COLOR[s.sede]}">${s.sede}</span></td>
+        <td>${money(s.monto)}</td>
+        <td><button class="pill ${s.pago==='pagado'?'ok':'wait'}" style="border:0;cursor:pointer" onclick="togglePago(${s.id})">${s.pago==='pagado'?'Pagado':'Pendiente'}</button></td>
+      </tr>`).join('')}
+    </tbody></table></div>`;
+}
+function togglePago(id){ const s=DB.sales.find(x=>x.id===id); if(s){s.pago=s.pago==='pagado'?'pendiente':'pagado'; toast('Estado de pago actualizado'); render();} }
+
+/* ---- RECUPERACIÓN ---- */
+function vRecuperacion(v){
+  const sedes=visibleSedes();
+  const list=DB.debts.filter(d=>sedes.includes(d.sede));
+  const activa=list.filter(d=>d.estado==='activa');
+  const total=activa.reduce((a,d)=>a+d.monto,0);
+  v.innerHTML = topbar('Recuperación de deudas', `${activa.length} deudas activas · comisión ${S.commission}%`, true)
+  + `<div class="hint">La comisión de recuperación es configurable. Al cobrar, el sistema calcula automáticamente la comisión sobre el monto recuperado.</div>
+    <div class="toolbar">
+      <div class="search" style="max-width:220px">Comisión %<input type="number" value="${S.commission}" min="0" max="50" oninput="setCommission(this.value)" style="text-align:right"></div>
+      <div style="flex:1"></div>
+      <div class="kpi" style="padding:10px 16px;box-shadow:none;background:var(--mint-soft);border-color:var(--mint)"><div class="lbl">Total por recuperar</div><div class="num" style="font-size:20px">${money(total)}</div></div>
+    </div>
+    <div class="card" style="padding:8px 0 8px"><table><thead><tr><th>Paciente</th><th>Sede</th><th>Monto</th><th>Días</th><th>Comisión</th><th>Estado</th></tr></thead><tbody>
+      ${list.map(d=>`<tr>
+        <td><b>${d.paciente}</b></td>
+        <td><span class="pill" style="background:${SEDE_COLOR[d.sede]}22;color:${SEDE_COLOR[d.sede]}">${d.sede}</span></td>
+        <td>${money(d.monto)}</td>
+        <td>${d.dias} días</td>
+        <td>${money(d.monto*S.commission/100)}</td>
+        <td>${d.estado==='cobrada'?'<span class="pill ok">Cobrada</span>':`<button class="btn sm" onclick="cobrar(${d.id})">Cobrar</button>`}</td>
+      </tr>`).join('')}
+    </tbody></table>
+    ${list.length===0?'<div class="empty"><div class="em-ic">◎</div><h4>Sin deudas</h4><p>No hay montos por recuperar en esta sede.</p></div>':''}
+    </div>`;
+}
+function setCommission(v){ S.commission=Math.max(0,Math.min(50,+v||0)); render(); const inp=document.querySelector('.search input[type=number]'); if(inp) inp.focus(); }
+function cobrar(id){ const d=DB.debts.find(x=>x.id===id); if(d){ d.estado='cobrada'; toast(`Cobrado ${money(d.monto)} · comisión ${money(d.monto*S.commission/100)}`); render(); } }
+
+/* ---- CUADRATURA ---- */
+function vCuadratura(v){
+  const sedes=visibleSedes();
+  const day=todayStr();
+  const rows=sedes.map(sd=>{
+    const ing=DB.sales.filter(s=>s.sede===sd&&s.pago==='pagado').reduce((a,s)=>a+s.monto,0);
+    const gas=DB.expenses.filter(e=>e.sede===sd).reduce((a,e)=>a+e.monto,0);
+    return {sede:sd, ing, gas, neto:ing-gas};
+  });
+  const tI=rows.reduce((a,r)=>a+r.ing,0), tG=rows.reduce((a,r)=>a+r.gas,0);
+  v.innerHTML = topbar('Cuadratura', `Cierre financiero por sede`, true)
+  + `<div class="kpis" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="kpi"><div class="lbl">Ingresos (pagados)</div><div class="num up">${money(tI)}</div></div>
+      <div class="kpi"><div class="lbl">Gastos</div><div class="num down">${money(tG)}</div></div>
+      <div class="kpi"><div class="lbl">Resultado neto</div><div class="num">${money(tI-tG)}</div></div>
+    </div>
+    <div class="card" style="padding:8px 0 8px"><table><thead><tr><th>Sede</th><th>Ingresos</th><th>Gastos</th><th>Neto</th><th></th></tr></thead><tbody>
+      ${rows.map(r=>`<tr>
+        <td><span class="pill" style="background:${SEDE_COLOR[r.sede]}22;color:${SEDE_COLOR[r.sede]}">${r.sede}</span></td>
+        <td class="up">${money(r.ing)}</td><td class="down">${money(r.gas)}</td>
+        <td><b>${money(r.neto)}</b></td>
+        <td style="text-align:right"><button class="btn sm ghost" onclick="toast('Cierre de ${r.sede} registrado ✓')">Cerrar día</button></td>
+      </tr>`).join('')}
+    </tbody></table></div>`;
+}
+
+/* ---- GASTOS ---- */
+function vGastos(v){
+  const sedes=visibleSedes();
+  const list=DB.expenses.filter(e=>sedes.includes(e.sede));
+  const total=list.reduce((a,e)=>a+e.monto,0);
+  v.innerHTML = topbar('Gastos', `${list.length} egresos · ${money(total)}`, true)
+  + `<div class="toolbar"><div style="flex:1"></div><button class="btn" onclick="modalNuevoGasto()">＋ Registrar gasto</button></div>
+    <div class="card" style="padding:8px 0 8px"><table><thead><tr><th>Fecha</th><th>Categoría</th><th>Descripción</th><th>Sede</th><th>Monto</th></tr></thead><tbody>
+      ${list.map(e=>`<tr><td>${e.fecha}</td><td><b>${e.categoria}</b></td><td>${e.descripcion}</td>
+        <td><span class="pill" style="background:${SEDE_COLOR[e.sede]}22;color:${SEDE_COLOR[e.sede]}">${e.sede}</span></td>
+        <td class="down">${money(e.monto)}</td></tr>`).join('')}
+    </tbody></table>
+    ${list.length===0?'<div class="empty"><div class="em-ic">▦</div><h4>Sin gastos</h4><p>Registra el primer egreso.</p></div>':''}</div>`;
+}
+
+/* ---- BILLING ---- */
+function vBilling(v){
+  const total=DB.billing.filter(b=>b.estado==='pendiente').reduce((a,b)=>a+b.monto,0);
+  v.innerHTML = topbar('Facturación', `Kraibe Solutions ↔ Footline`, false)
+  + `<div class="hint">Vista visible solo para OWNER y KRAIBE_ADMIN. Aquí se ve cuánto factura Kraibe al cliente por el sistema.</div>
+    <div class="kpis" style="grid-template-columns:1fr 1fr">
+      <div class="kpi"><div class="lbl">Pendiente de pago</div><div class="num down">${money(total)}</div></div>
+      <div class="kpi"><div class="lbl">Plan actual</div><div class="num" style="font-size:18px">Footline MVP</div><div class="delta">Licencia mensual $390.000</div></div>
+    </div>
+    <div class="card" style="padding:8px 0 8px"><table><thead><tr><th>Período</th><th>Concepto</th><th>Monto</th><th>Estado</th></tr></thead><tbody>
+      ${DB.billing.map(b=>`<tr><td>${b.mes}</td><td><b>${b.concepto}</b></td><td>${money(b.monto)}</td>
+        <td><span class="pill ${b.estado==='pagado'?'ok':'wait'}">${b.estado==='pagado'?'Pagado':'Pendiente'}</span></td></tr>`).join('')}
+    </tbody></table></div>`;
+}
+
+/* ---- IMPORT ---- */
+function vImport(v){
+  v.innerHTML = topbar('Importar Excel', `Carga masiva de historial de pacientes`, false)
+  + `<div class="hint">Solo OWNER y KRAIBE_ADMIN pueden importar datos masivos. Las secretarias no ven esta pestaña.</div>
+    <div class="card" style="text-align:center;padding:50px 20px">
+      <div style="font-size:40px;opacity:.3">▤</div>
+      <h3 style="margin:14px 0 6px">Arrastra tu archivo Excel aquí</h3>
+      <p style="color:var(--muted);margin-bottom:18px">Formato validado contra la fuente Footline · 613 pacientes / 652 ventas ya importados</p>
+      <button class="btn" onclick="toast('Simulación: 12 pacientes nuevos importados ✓')">Seleccionar archivo</button>
+    </div>`;
+}
+
+/* ============ MODALS ============ */
+const ov=()=>document.getElementById('overlay'), md=()=>document.getElementById('modal');
+function openModal(html){ md().innerHTML=html; ov().classList.add('show'); }
+function closeModal(){ ov().classList.remove('show'); }
+ov().addEventListener('click', e=>{ if(e.target===ov()) closeModal(); });
+
+function sedeOptions(){
+  const sedes = isSecretaria()?[S.user.sede]:SEDES;
+  return sedes.map(s=>`<option value="${s}">${s}</option>`).join('');
+}
+function pacienteOptions(){
+  const sedes=visibleSedes();
+  return DB.patients.filter(p=>sedes.includes(p.sede)).map(p=>`<option value="${p.id}">${p.nombre} (${p.sede})</option>`).join('');
+}
+
+function modalNuevoPaciente(){
+  openModal(`<h3>Nuevo paciente</h3>
+    <div class="field"><label>Nombre completo</label><input id="np-nom" placeholder="Ej: Camila Rojas"></div>
+    <div class="field"><label>RUT</label><input id="np-rut" placeholder="12.345.678-9"></div>
+    <div class="field"><label>Edad</label><input id="np-edad" type="number" placeholder="30"></div>
+    <div class="field"><label>Teléfono</label><input id="np-tel" placeholder="+569 ..."></div>
+    <div class="field"><label>Sede</label><select id="np-sede">${sedeOptions()}</select></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn" onclick="saveP()">Guardar paciente</button></div>`);
+}
+function saveP(){
+  const nom=val('np-nom'); if(!nom){toast('Ingresa el nombre');return;}
+  const id=Math.max(...DB.patients.map(p=>p.id))+1;
+  const sede=val('np-sede');
+  DB.patients.unshift({id, nombre:nom, rut:val('np-rut')||rut(), edad:+val('np-edad')||30, telefono:val('np-tel')||'—', sede, ultima:todayStr(),
+    historial:[{id:1, fecha:todayStr(),motivo:'Ingreso',pro:pick(PROS[sede]), diagnostico:'', tratamiento:''}],
+    fechaNacimiento:'', sexo:'', direccion:'', prevision:'Particular', contactoEmergencia:'', alergias:'', antecedentes:'', medicamentosHabituales:'', grupoSanguineo:'',
+    recetas:[], derivaciones:[], examenes:[], licencias:[], documentos:[]});
+  closeModal(); toast('Paciente agregado ✓'); S.patientPage=0; render();
+}
+
+function modalNuevaCita(pid){
+  const p = pid?DB.patients.find(x=>x.id===pid):null;
+  openModal(`<h3>Nueva cita</h3>
+    <div class="field"><label>Paciente</label><select id="nc-pac">${p?`<option value="${p.id}">${p.nombre} (${p.sede})</option>`:pacienteOptions()}</select></div>
+    <div class="field"><label>Fecha</label><input id="nc-fecha" type="date" value="${todayStr()}"></div>
+    <div class="field"><label>Hora</label><input id="nc-hora" type="time" value="10:00"></div>
+    <div class="field"><label>Motivo</label><select id="nc-mot">${SERVICIOS.map(s=>`<option>${s}</option>`).join('')}</select></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn" onclick="saveC()">Agendar</button></div>`);
+}
+function saveC(){
+  const pac=DB.patients.find(p=>p.id===+val('nc-pac')); if(!pac){toast('Selecciona un paciente');return;}
+  DB.appointments.push({id:Math.max(0,...DB.appointments.map(a=>a.id))+1, fecha:val('nc-fecha'), hora:val('nc-hora'), pacienteId:pac.id, paciente:pac.nombre, sede:pac.sede, pro:pick(PROS[pac.sede]), motivo:val('nc-mot'), estado:'pendiente'});
+  closeModal(); toast('Cita agendada ✓'); S.view='citas'; S.detail=null; shell();
+}
+
+function modalNuevaVenta(){
+  openModal(`<h3>Registrar venta</h3>
+    <div class="field"><label>Paciente</label><select id="nv-pac">${pacienteOptions()}</select></div>
+    <div class="field"><label>Servicio</label><select id="nv-serv">${SERVICIOS.map(s=>`<option>${s}</option>`).join('')}</select></div>
+    <div class="field"><label>Monto</label><input id="nv-monto" type="number" value="25000"></div>
+    <div class="field"><label>Estado de pago</label><select id="nv-pago"><option value="pagado">Pagado</option><option value="pendiente">Pendiente</option></select></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn" onclick="saveV()">Registrar</button></div>`);
+}
+function saveV(){
+  const pac=DB.patients.find(p=>p.id===+val('nv-pac')); if(!pac){toast('Selecciona un paciente');return;}
+  DB.sales.unshift({id:Math.max(0,...DB.sales.map(s=>s.id))+1, fecha:todayStr(), pacienteId:pac.id, paciente:pac.nombre, sede:pac.sede, servicio:val('nv-serv'), monto:+val('nv-monto')||0, pago:val('nv-pago')});
+  closeModal(); toast('Venta registrada ✓'); render();
+}
+
+function modalNuevoGasto(){
+  openModal(`<h3>Registrar gasto</h3>
+    <div class="field"><label>Categoría</label><select id="ng-cat">${['Insumos clínicos','Arriendo','Servicios básicos','Marketing','Sueldos','Mantención'].map(c=>`<option>${c}</option>`).join('')}</select></div>
+    <div class="field"><label>Descripción</label><input id="ng-desc" placeholder="Detalle del egreso"></div>
+    <div class="field"><label>Monto</label><input id="ng-monto" type="number" value="50000"></div>
+    <div class="field"><label>Sede</label><select id="ng-sede">${sedeOptions()}</select></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn" onclick="saveG()">Registrar</button></div>`);
+}
+function saveG(){
+  DB.expenses.unshift({id:Math.max(0,...DB.expenses.map(e=>e.id))+1, fecha:todayStr(), sede:val('ng-sede'), categoria:val('ng-cat'), descripcion:val('ng-desc')||'Egreso', monto:+val('ng-monto')||0});
+  closeModal(); toast('Gasto registrado ✓'); render();
+}
+
+function modalSesion(pid){
+  openModal(`<h3>Nueva atención</h3>
+    <div class="field"><label>Motivo</label><select id="ns-mot">${SERVICIOS.map(s=>`<option>${s}</option>`).join('')}</select></div>
+    <div class="field"><label>Fecha</label><input id="ns-fecha" type="date" value="${todayStr()}"></div>
+    <div class="field"><label>Diagnóstico</label><input id="ns-diag" placeholder="Diagnóstico clínico"></div>
+    <div class="field"><label>Tratamiento indicado</label><input id="ns-trat" placeholder="Tratamiento / indicaciones"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn" onclick="saveS(${pid})">Guardar</button></div>`);
+}
+function saveS(pid){
+  const p=DB.patients.find(x=>x.id===pid);
+  const nid=(p.historial.length?Math.max(...p.historial.map(h=>h.id||0))+1:1);
+  p.historial.unshift({id:nid, fecha:val('ns-fecha'), motivo:val('ns-mot'), pro:pick(PROS[p.sede]), diagnostico:val('ns-diag'), tratamiento:val('ns-trat')});
+  p.ultima=val('ns-fecha'); closeModal(); toast('Atención registrada ✓'); render();
+}
+
+/* ---- FICHA CLÍNICA: editar datos ---- */
+function modalEditarFicha(pid){
+  const p=DB.patients.find(x=>x.id===pid);
+  openModal(`<h3>Editar ficha</h3>
+    <div class="field"><label>Fecha de nacimiento</label><input id="ef-nac" type="date" value="${p.fechaNacimiento||''}"></div>
+    <div class="field"><label>Sexo</label><select id="ef-sexo">
+      <option ${p.sexo==='Femenino'?'selected':''}>Femenino</option><option ${p.sexo==='Masculino'?'selected':''}>Masculino</option><option ${p.sexo==='Otro'?'selected':''}>Otro</option></select></div>
+    <div class="field"><label>Previsión</label><select id="ef-prev">
+      <option ${p.prevision==='FONASA'?'selected':''}>FONASA</option><option ${p.prevision==='ISAPRE'?'selected':''}>ISAPRE</option><option ${p.prevision==='Particular'?'selected':''}>Particular</option></select></div>
+    <div class="field"><label>Grupo sanguíneo</label><input id="ef-grupo" value="${p.grupoSanguineo||''}" placeholder="Ej: O+"></div>
+    <div class="field"><label>Dirección</label><input id="ef-dir" value="${p.direccion||''}"></div>
+    <div class="field"><label>Contacto de emergencia</label><input id="ef-emerg" value="${p.contactoEmergencia||''}" placeholder="Nombre y teléfono"></div>
+    <div class="field"><label>Alergias</label><input id="ef-alerg" value="${p.alergias||''}" placeholder="Ej: Penicilina, ninguna conocida..."></div>
+    <div class="field"><label>Antecedentes médicos</label><input id="ef-ante" value="${p.antecedentes||''}"></div>
+    <div class="field"><label>Medicamentos habituales</label><input id="ef-med" value="${p.medicamentosHabituales||''}"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn" onclick="saveFicha(${pid})">Guardar</button></div>`);
+}
+function saveFicha(pid){
+  const p=DB.patients.find(x=>x.id===pid);
+  Object.assign(p, { fechaNacimiento:val('ef-nac'), sexo:val('ef-sexo'), prevision:val('ef-prev'), grupoSanguineo:val('ef-grupo'), direccion:val('ef-dir'), contactoEmergencia:val('ef-emerg'), alergias:val('ef-alerg'), antecedentes:val('ef-ante'), medicamentosHabituales:val('ef-med') });
+  closeModal(); toast('Ficha actualizada ✓'); render();
+}
+
+/* ---- RECETAS ---- */
+function modalReceta(pid){
+  const p=DB.patients.find(x=>x.id===pid);
+  openModal(`<h3>Nueva receta</h3>
+    <div class="field"><label>Fecha</label><input id="rc-fecha" type="date" value="${todayStr()}"></div>
+    <div class="field"><label>Profesional</label><select id="rc-pro">${PROS[p.sede].map(x=>`<option>${x}</option>`).join('')}</select></div>
+    <div class="field"><label>Medicamento</label><input id="rc-med" placeholder="Ej: Ibuprofeno 400mg"></div>
+    <div class="field"><label>Dosis / posología</label><input id="rc-dosis" placeholder="Ej: 1 comprimido cada 8 horas"></div>
+    <div class="field"><label>Indicaciones adicionales</label><input id="rc-ind" placeholder="Opcional"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn" onclick="saveReceta(${pid})">Guardar receta</button></div>`);
+}
+function saveReceta(pid){
+  const med=val('rc-med'); if(!med){toast('Ingresa el medicamento');return;}
+  const p=DB.patients.find(x=>x.id===pid);
+  const nid=(p.recetas.length?Math.max(...p.recetas.map(r=>r.id))+1:1);
+  p.recetas.push({id:nid, fecha:val('rc-fecha')||todayStr(), pro:val('rc-pro'), medicamento:med, dosis:val('rc-dosis'), indicaciones:val('rc-ind')});
+  closeModal(); toast('Receta guardada ✓'); render();
+}
+
+/* ---- DERIVACIONES ---- */
+function modalDerivacion(pid){
+  const p=DB.patients.find(x=>x.id===pid);
+  openModal(`<h3>Nueva derivación</h3>
+    <div class="field"><label>Fecha</label><input id="dv-fecha" type="date" value="${todayStr()}"></div>
+    <div class="field"><label>Profesional que deriva</label><select id="dv-pro">${PROS[p.sede].map(x=>`<option>${x}</option>`).join('')}</select></div>
+    <div class="field"><label>Especialidad de destino</label><input id="dv-dest" placeholder="Ej: Traumatología, Neurología..."></div>
+    <div class="field"><label>Motivo</label><input id="dv-mot" placeholder="Motivo de la derivación"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn" onclick="saveDerivacion(${pid})">Guardar</button></div>`);
+}
+function saveDerivacion(pid){
+  const dest=val('dv-dest'); if(!dest){toast('Ingresa la especialidad de destino');return;}
+  const p=DB.patients.find(x=>x.id===pid);
+  const nid=(p.derivaciones.length?Math.max(...p.derivaciones.map(r=>r.id))+1:1);
+  p.derivaciones.push({id:nid, fecha:val('dv-fecha')||todayStr(), pro:val('dv-pro'), destino:dest, motivo:val('dv-mot')});
+  closeModal(); toast('Derivación guardada ✓'); render();
+}
+
+/* ---- EXÁMENES ---- */
+function modalExamen(pid){
+  openModal(`<h3>Nuevo examen</h3>
+    <div class="field"><label>Fecha</label><input id="ex-fecha" type="date" value="${todayStr()}"></div>
+    <div class="field"><label>Tipo de examen</label><input id="ex-tipo" placeholder="Ej: Radiografía, Ecografía..."></div>
+    <div class="field"><label>Resultado / observaciones</label><input id="ex-res" placeholder="Resultado"></div>
+    <div class="field"><label>Adjuntar archivo (imagen o PDF, opcional)</label><input id="ex-file" type="file" accept="image/*,.pdf"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn" onclick="saveExamen(${pid})">Guardar examen</button></div>`);
+}
+function saveExamen(pid){
+  const tipo=val('ex-tipo'); if(!tipo){toast('Ingresa el tipo de examen');return;}
+  const fecha=val('ex-fecha')||todayStr(), resultado=val('ex-res');
+  const file=document.getElementById('ex-file').files[0];
+  const p=DB.patients.find(x=>x.id===pid);
+  const guardar=(dataUrl)=>{
+    const nid=(p.examenes.length?Math.max(...p.examenes.map(r=>r.id))+1:1);
+    p.examenes.push({id:nid, fecha, tipo, resultado, archivo:dataUrl||null});
+    closeModal(); toast('Examen guardado ✓'); render();
+  };
+  if(file){
+    if(file.size>4*1024*1024){ toast('El archivo supera 4MB'); return; }
+    const reader=new FileReader(); reader.onload=e=>guardar(e.target.result); reader.readAsDataURL(file);
+  } else guardar(null);
+}
+
+/* ---- LICENCIAS ---- */
+function modalLicencia(pid){
+  openModal(`<h3>Nueva licencia médica</h3>
+    <div class="field"><label>Fecha de emisión</label><input id="lc-fecha" type="date" value="${todayStr()}"></div>
+    <div class="field"><label>Días de reposo</label><input id="lc-dias" type="number" min="1" value="1"></div>
+    <div class="field"><label>Diagnóstico</label><input id="lc-diag" placeholder="Ej: Síndrome de túnel carpiano"></div>
+    <div class="field"><label>Adjuntar documento (opcional)</label><input id="lc-file" type="file" accept="image/*,.pdf"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn" onclick="saveLicencia(${pid})">Guardar licencia</button></div>`);
+}
+function saveLicencia(pid){
+  const diag=val('lc-diag'); if(!diag){toast('Ingresa el diagnóstico');return;}
+  const fecha=val('lc-fecha')||todayStr(), dias=val('lc-dias')||1;
+  const file=document.getElementById('lc-file').files[0];
+  const p=DB.patients.find(x=>x.id===pid);
+  const guardar=(dataUrl)=>{
+    const nid=(p.licencias.length?Math.max(...p.licencias.map(r=>r.id))+1:1);
+    p.licencias.push({id:nid, fecha, dias, diagnostico:diag, archivo:dataUrl||null});
+    closeModal(); toast('Licencia guardada ✓'); render();
+  };
+  if(file){
+    if(file.size>4*1024*1024){ toast('El archivo supera 4MB'); return; }
+    const reader=new FileReader(); reader.onload=e=>guardar(e.target.result); reader.readAsDataURL(file);
+  } else guardar(null);
+}
+
+/* ---- DOCUMENTOS ---- */
+function subirDocumento(pid, input){
+  const file=input.files[0]; if(!file) return;
+  if(file.size>4*1024*1024){ toast('El archivo supera 4MB'); return; }
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const p=DB.patients.find(x=>x.id===pid);
+    const nid=(p.documentos.length?Math.max(...p.documentos.map(r=>r.id))+1:1);
+    p.documentos.push({id:nid, nombre:file.name, tipo:file.type, fecha:todayStr(), data:e.target.result});
+    toast('Documento cargado ✓'); render();
   };
   reader.readAsDataURL(file);
 }
 
-function eliminarSub(campo, itemId){
-  const p = PACIENTES.find(x=>x.id===PACIENTE_ACTIVO_ID);
-  if(!p) return;
-  p[campo] = p[campo].filter(i=>i.id!==itemId);
-  persistTodo();
-  renderTabFicha(campo);
-  renderPacientes();
-  renderDashboard();
+/* ---- IMPRESIÓN DE RECETAS Y LICENCIAS ---- */
+const LOGO_URL_IMPRESION='https://res.cloudinary.com/dway4iqeh/image/upload/v1783821452/footline_m0srtn.png';
+function membreteImpresion(tituloDoc){
+  return `<div style="display:flex;align-items:center;gap:14px;border-bottom:3px solid #1B5D8C;padding-bottom:14px;margin-bottom:22px">
+    <img src="${LOGO_URL_IMPRESION}" style="height:44px;object-fit:contain;background:#fff;border-radius:8px;padding:6px;border:1px solid #DCE4EC">
+    <div><div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:19px;color:#0C3A57">Footline</div>
+    <div style="font-size:11.5px;color:#5C6B67;letter-spacing:.04em;text-transform:uppercase">Kinesiología · ${tituloDoc}</div></div></div>`;
 }
-
-/* ---------- Sub-formularios de la ficha (historial, receta, derivación, examen, licencia) ---------- */
-function abrirModalHistorial(){
-  abrirModal(`
-    <div class="modal-head"><h3>Nueva atención · Historial</h3><button class="cerrar-x" onclick="reabrirFicha('historial')">&#10005;</button></div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="campo"><label>Fecha</label><input type="date" id="hFecha" value="${hoyISO()}"></div>
-        <div class="campo"><label>Especialista</label><select id="hEsp"><option value="">Seleccionar...</option>${opcionesEspecialistasHTML()}</select></div>
-        <div class="campo full"><label>Motivo de consulta</label><input id="hMotivo" placeholder="Ej: Control, dolor abdominal..."></div>
-        <div class="campo full"><label>Diagnóstico</label><textarea id="hDiag"></textarea></div>
-        <div class="campo full"><label>Tratamiento indicado</label><textarea id="hTrat"></textarea></div>
-      </div>
-      <div class="form-acciones"><button class="btn btn-linea" onclick="reabrirFicha('historial')">Cancelar</button><button class="btn btn-primario" onclick="guardarHistorial()">Guardar atención</button></div>
-    </div>
-  `);
-}
-function guardarHistorial(){
-  const motivo = document.getElementById('hMotivo').value.trim();
-  if(!motivo){ toast('Ingresa el motivo de consulta','error'); return; }
-  const p = PACIENTES.find(x=>x.id===PACIENTE_ACTIVO_ID);
-  p.historial.push({ id:uid('hist'), fecha:document.getElementById('hFecha').value||hoyISO(), especialistaId:document.getElementById('hEsp').value, motivo, diagnostico:document.getElementById('hDiag').value.trim(), tratamiento:document.getElementById('hTrat').value.trim() });
-  persistTodo(); reabrirFicha('historial'); renderPacientes(); toast('Atención registrada','exito');
-}
-
-function abrirModalReceta(){
-  abrirModal(`
-    <div class="modal-head"><h3>Nueva receta</h3><button class="cerrar-x" onclick="reabrirFicha('recetas')">&#10005;</button></div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="campo"><label>Fecha</label><input type="date" id="rFecha" value="${hoyISO()}"></div>
-        <div class="campo"><label>Especialista que prescribe</label><select id="rEsp"><option value="">Seleccionar...</option>${opcionesEspecialistasHTML()}</select></div>
-        <div class="campo full"><label>Medicamento</label><input id="rMed" placeholder="Ej: Amoxicilina 500mg"></div>
-        <div class="campo full"><label>Dosis / posología</label><input id="rDosis" placeholder="Ej: 1 comprimido cada 8 horas por 7 días"></div>
-        <div class="campo full"><label>Indicaciones adicionales</label><textarea id="rIndic"></textarea></div>
-      </div>
-      <div class="form-acciones"><button class="btn btn-linea" onclick="reabrirFicha('recetas')">Cancelar</button><button class="btn btn-primario" onclick="guardarReceta()">Guardar receta</button></div>
-    </div>
-  `);
-}
-function guardarReceta(){
-  const med = document.getElementById('rMed').value.trim();
-  if(!med){ toast('Ingresa el medicamento','error'); return; }
-  const p = PACIENTES.find(x=>x.id===PACIENTE_ACTIVO_ID);
-  p.recetas.push({ id:uid('rec'), fecha:document.getElementById('rFecha').value||hoyISO(), especialistaId:document.getElementById('rEsp').value, medicamento:med, dosis:document.getElementById('rDosis').value.trim(), indicaciones:document.getElementById('rIndic').value.trim() });
-  persistTodo(); reabrirFicha('recetas'); toast('Receta registrada','exito');
-}
-
-function abrirModalDerivacion(){
-  abrirModal(`
-    <div class="modal-head"><h3>Nueva derivación</h3><button class="cerrar-x" onclick="reabrirFicha('derivaciones')">&#10005;</button></div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="campo"><label>Fecha</label><input type="date" id="dFecha" value="${hoyISO()}"></div>
-        <div class="campo"><label>Especialista que deriva</label><select id="dEspOrigen"><option value="">Seleccionar...</option>${opcionesEspecialistasHTML()}</select></div>
-        <div class="campo full"><label>Especialidad de destino</label><input id="dEspDestino" placeholder="Ej: Cardiología, Oftalmología..."></div>
-        <div class="campo full"><label>Motivo de la derivación</label><textarea id="dMotivo"></textarea></div>
-      </div>
-      <div class="form-acciones"><button class="btn btn-linea" onclick="reabrirFicha('derivaciones')">Cancelar</button><button class="btn btn-primario" onclick="guardarDerivacion()">Guardar derivación</button></div>
-    </div>
-  `);
-}
-function guardarDerivacion(){
-  const destino = document.getElementById('dEspDestino').value.trim();
-  if(!destino){ toast('Ingresa la especialidad de destino','error'); return; }
-  const p = PACIENTES.find(x=>x.id===PACIENTE_ACTIVO_ID);
-  p.derivaciones.push({ id:uid('der'), fecha:document.getElementById('dFecha').value||hoyISO(), especialistaOrigenId:document.getElementById('dEspOrigen').value, especialidadDestino:destino, motivo:document.getElementById('dMotivo').value.trim() });
-  persistTodo(); reabrirFicha('derivaciones'); toast('Derivación registrada','exito');
-}
-
-function abrirModalExamen(){
-  abrirModal(`
-    <div class="modal-head"><h3>Nuevo examen</h3><button class="cerrar-x" onclick="reabrirFicha('examenes')">&#10005;</button></div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="campo"><label>Fecha</label><input type="date" id="xFecha" value="${hoyISO()}"></div>
-        <div class="campo"><label>Tipo de examen</label><input id="xTipo" placeholder="Ej: Hemograma, Radiografía..."></div>
-        <div class="campo full"><label>Resultado / observaciones</label><textarea id="xResultado"></textarea></div>
-        <div class="campo full"><label>Adjuntar archivo (imagen o PDF, opcional)</label><input type="file" id="xArchivo" accept="image/*,.pdf"></div>
-      </div>
-      <div class="form-acciones"><button class="btn btn-linea" onclick="reabrirFicha('examenes')">Cancelar</button><button class="btn btn-primario" onclick="guardarExamen()">Guardar examen</button></div>
-    </div>
-  `);
-}
-function guardarExamen(){
-  const tipo = document.getElementById('xTipo').value.trim();
-  if(!tipo){ toast('Ingresa el tipo de examen','error'); return; }
-  const fecha = document.getElementById('xFecha').value||hoyISO();
-  const resultado = document.getElementById('xResultado').value.trim();
-  const file = document.getElementById('xArchivo').files[0];
-  const p = PACIENTES.find(x=>x.id===PACIENTE_ACTIVO_ID);
-  const guardarConArchivo = (dataUrl)=>{
-    p.examenes.push({ id:uid('exa'), fecha, tipo, resultado, archivo:dataUrl||null });
-    persistTodo(); reabrirFicha('examenes'); toast('Examen registrado','exito');
-  };
-  if(file){
-    if(file.size > 4*1024*1024){ toast('El archivo supera 4MB','error'); return; }
-    const reader = new FileReader();
-    reader.onload = e=> guardarConArchivo(e.target.result);
-    reader.readAsDataURL(file);
-  } else guardarConArchivo(null);
-}
-
-function abrirModalLicencia(){
-  abrirModal(`
-    <div class="modal-head"><h3>Nueva licencia médica</h3><button class="cerrar-x" onclick="reabrirFicha('licencias')">&#10005;</button></div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="campo"><label>Fecha de emisión</label><input type="date" id="lFecha" value="${hoyISO()}"></div>
-        <div class="campo"><label>Días de reposo</label><input type="number" id="lDias" min="1" value="1"></div>
-        <div class="campo full"><label>Diagnóstico</label><input id="lDiag" placeholder="Ej: Síndrome gripal"></div>
-        <div class="campo full"><label>Adjuntar documento (opcional)</label><input type="file" id="lArchivo" accept="image/*,.pdf"></div>
-      </div>
-      <div class="form-acciones"><button class="btn btn-linea" onclick="reabrirFicha('licencias')">Cancelar</button><button class="btn btn-primario" onclick="guardarLicencia()">Guardar licencia</button></div>
-    </div>
-  `);
-}
-function guardarLicencia(){
-  const diag = document.getElementById('lDiag').value.trim();
-  if(!diag){ toast('Ingresa el diagnóstico','error'); return; }
-  const fecha = document.getElementById('lFecha').value||hoyISO();
-  const dias = document.getElementById('lDias').value || 1;
-  const file = document.getElementById('lArchivo').files[0];
-  const p = PACIENTES.find(x=>x.id===PACIENTE_ACTIVO_ID);
-  const guardarConArchivo = (dataUrl)=>{
-    p.licencias.push({ id:uid('lic'), fecha, dias, diagnostico:diag, archivo:dataUrl||null });
-    persistTodo(); reabrirFicha('licencias'); toast('Licencia registrada','exito');
-  };
-  if(file){
-    if(file.size > 4*1024*1024){ toast('El archivo supera 4MB','error'); return; }
-    const reader = new FileReader();
-    reader.onload = e=> guardarConArchivo(e.target.result);
-    reader.readAsDataURL(file);
-  } else guardarConArchivo(null);
-}
-
-function reabrirFicha(tab){ abrirFichaPaciente(PACIENTE_ACTIVO_ID); setTimeout(()=>{
-  document.querySelectorAll('#fichaTabs .tab-btn').forEach(x=>x.classList.toggle('activo', x.dataset.tab===tab));
-  renderTabFicha(tab);
-},0); }
-
-/* ---------- Impresión de recetas y licencias ---------- */
-const LOGO_URL = 'https://res.cloudinary.com/dway4iqeh/image/upload/v1783780694/logo_kvdlao.jpg';
-
-function membreteImpresionHTML(tituloDoc){
-  return `
-    <div style="display:flex;align-items:center;gap:14px;border-bottom:3px solid #1a72b0;padding-bottom:14px;margin-bottom:22px;">
-      <img src="${LOGO_URL}" style="width:60px;height:60px;object-fit:contain;background:#fff;border-radius:10px;padding:4px;border:1px solid #d7e8f2;">
-      <div>
-        <div style="font-family:'Manrope',sans-serif;font-weight:800;font-size:19px;color:#0a3a5c;">MediCenter</div>
-        <div style="font-size:11.5px;color:#4d6a7c;letter-spacing:.04em;text-transform:uppercase;">Centro Médico · ${tituloDoc}</div>
-      </div>
-    </div>
-  `;
-}
-function abrirVentanaImpresion(contenidoHTML){
-  const w = window.open('', '_blank', 'width=820,height=1000');
-  if(!w){ toast('El navegador bloqueó la ventana de impresión. Habilita las ventanas emergentes.','error'); return; }
-  w.document.write(`
-    <!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Documento médico</title>
+function abrirVentanaImpresion(html){
+  const w=window.open('', '_blank', 'width=820,height=1000');
+  if(!w){ toast('El navegador bloqueó la ventana de impresión'); return; }
+  w.document.write(`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Documento clínico</title>
     <style>
-      *{box-sizing:border-box;} body{font-family:'Inter',Arial,sans-serif;color:#0f2a3d;max-width:760px;margin:30px auto;padding:0 24px;}
-      table{width:100%;border-collapse:collapse;} td{padding:5px 0;font-size:13.5px;vertical-align:top;}
-      .etiqueta{color:#4d6a7c;font-size:11px;text-transform:uppercase;letter-spacing:.04em;font-weight:700;margin-top:16px;margin-bottom:4px;}
-      .caja{border:1.5px solid #d7e8f2;border-radius:10px;padding:14px 16px;margin-top:6px;background:#f7fbfd;}
-      .firma{margin-top:70px;text-align:center;}
-      .firma .linea{border-top:1.5px solid #0f2a3d;width:280px;margin:0 auto 6px;}
-      @media print{ .no-print{display:none;} body{margin:0;padding:14px 24px;} }
-    </style></head>
-    <body>
-      ${contenidoHTML}
-      <div class="no-print" style="margin-top:30px;text-align:center;">
-        <button onclick="window.print()" style="background:#1a72b0;color:#fff;border:none;padding:11px 22px;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;">Imprimir documento</button>
-      </div>
-    </body></html>
-  `);
-  w.document.close();
-  w.focus();
+      *{box-sizing:border-box}body{font-family:Inter,Arial,sans-serif;color:#14211E;max-width:760px;margin:30px auto;padding:0 24px}
+      table{width:100%;border-collapse:collapse}td{padding:5px 0;font-size:13.5px;vertical-align:top}
+      .etiqueta{color:#5C6B67;font-size:11px;text-transform:uppercase;letter-spacing:.04em;font-weight:700;margin-top:16px;margin-bottom:4px}
+      .caja{border:1.5px solid #DCE4EC;border-radius:10px;padding:14px 16px;margin-top:6px;background:#EEF4FA}
+      .firma{margin-top:70px;text-align:center}.firma .linea{border-top:1.5px solid #14211E;width:280px;margin:0 auto 6px}
+      @media print{.no-print{display:none}body{margin:0;padding:14px 24px}}
+    </style></head><body>${html}
+    <div class="no-print" style="margin-top:30px;text-align:center">
+      <button onclick="window.print()" style="background:#1B5D8C;color:#fff;border:none;padding:11px 22px;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer">Imprimir documento</button>
+    </div></body></html>`);
+  w.document.close(); w.focus();
   setTimeout(()=>{ try{ w.print(); }catch(e){} }, 400);
 }
-
-function imprimirReceta(recetaId){
-  const p = PACIENTES.find(x=>x.id===PACIENTE_ACTIVO_ID);
-  if(!p) return;
-  const r = p.recetas.find(x=>x.id===recetaId);
-  if(!r) return;
-  const esp = ESPECIALISTAS.find(x=>x.id===r.especialistaId);
-  const html = `
-    ${membreteImpresionHTML('Receta Médica')}
+function imprimirReceta(pid, rid){
+  const p=DB.patients.find(x=>x.id===pid); if(!p) return;
+  const r=p.recetas.find(x=>x.id===rid); if(!r) return;
+  const html=`${membreteImpresion('Receta Médica')}
     <table>
-      <tr><td style="width:50%;"><b>Paciente:</b> ${escapeHtml(p.nombre)}</td><td><b>RUT:</b> ${escapeHtml(p.rut)}</td></tr>
-      <tr><td><b>Edad:</b> ${edadDesde(p.fechaNacimiento)}</td><td><b>Previsión:</b> ${escapeHtml(p.prevision||'—')}</td></tr>
-      <tr><td><b>Fecha de emisión:</b> ${fmtFecha(r.fecha)}</td><td><b>Médico tratante:</b> ${escapeHtml(esp?esp.nombre:'—')}</td></tr>
-      ${esp?`<tr><td colspan="2"><b>Especialidad:</b> ${escapeHtml(esp.especialidad)}</td></tr>`:''}
+      <tr><td style="width:50%"><b>Paciente:</b> ${p.nombre}</td><td><b>RUT:</b> ${p.rut}</td></tr>
+      <tr><td><b>Edad:</b> ${p.edad} años</td><td><b>Previsión:</b> ${p.prevision||'—'}</td></tr>
+      <tr><td><b>Fecha de emisión:</b> ${r.fecha}</td><td><b>Profesional tratante:</b> ${r.pro}</td></tr>
     </table>
     <div class="etiqueta">Rp. (Prescripción)</div>
-    <div class="caja">
-      <div style="font-size:16px;font-weight:800;color:#0a3a5c;">${escapeHtml(r.medicamento)}</div>
-      <div style="margin-top:6px;"><b>Posología:</b> ${escapeHtml(r.dosis)}</div>
-      ${r.indicaciones?`<div style="margin-top:6px;"><b>Indicaciones:</b> ${escapeHtml(r.indicaciones)}</div>`:''}
+    <div class="caja"><div style="font-size:16px;font-weight:800;color:#0C3A57">${r.medicamento}</div>
+      <div style="margin-top:6px"><b>Posología:</b> ${r.dosis}</div>
+      ${r.indicaciones?`<div style="margin-top:6px"><b>Indicaciones:</b> ${r.indicaciones}</div>`:''}
     </div>
-    <div class="firma"><div class="linea"></div>Firma y timbre del médico</div>
-  `;
+    <div class="firma"><div class="linea"></div>Firma y timbre del profesional</div>`;
   abrirVentanaImpresion(html);
 }
-
-function imprimirLicencia(licenciaId){
-  const p = PACIENTES.find(x=>x.id===PACIENTE_ACTIVO_ID);
-  if(!p) return;
-  const l = p.licencias.find(x=>x.id===licenciaId);
-  if(!l) return;
-  const html = `
-    ${membreteImpresionHTML('Licencia Médica')}
+function imprimirLicencia(pid, lid){
+  const p=DB.patients.find(x=>x.id===pid); if(!p) return;
+  const l=p.licencias.find(x=>x.id===lid); if(!l) return;
+  const html=`${membreteImpresion('Licencia Médica')}
     <table>
-      <tr><td style="width:50%;"><b>Paciente:</b> ${escapeHtml(p.nombre)}</td><td><b>RUT:</b> ${escapeHtml(p.rut)}</td></tr>
-      <tr><td><b>Fecha de emisión:</b> ${fmtFecha(l.fecha)}</td><td><b>Previsión:</b> ${escapeHtml(p.prevision||'—')}</td></tr>
-      <tr><td colspan="2"><b>Días de reposo indicados:</b> ${escapeHtml(String(l.dias))} día(s)</td></tr>
+      <tr><td style="width:50%"><b>Paciente:</b> ${p.nombre}</td><td><b>RUT:</b> ${p.rut}</td></tr>
+      <tr><td><b>Fecha de emisión:</b> ${l.fecha}</td><td><b>Previsión:</b> ${p.prevision||'—'}</td></tr>
+      <tr><td colspan="2"><b>Días de reposo indicados:</b> ${l.dias} día(s)</td></tr>
     </table>
     <div class="etiqueta">Diagnóstico</div>
-    <div class="caja">${escapeHtml(l.diagnostico)}</div>
-    <div class="firma"><div class="linea"></div>Firma y timbre del médico</div>
-  `;
+    <div class="caja">${l.diagnostico}</div>
+    <div class="firma"><div class="linea"></div>Firma y timbre del profesional</div>`;
   abrirVentanaImpresion(html);
 }
 
-/* ======================================================================
-   MÓDULO ESPECIALISTAS
-====================================================================== */
-function abrirModalEspecialista(id){
-  const e = id ? ESPECIALISTAS.find(x=>x.id===id) : null;
-  const conv = e ? e.convenios : [];
-  abrirModal(`
-    <div class="modal-head"><h3>${e?'Editar especialista':'Nuevo especialista'}</h3><button class="cerrar-x" onclick="cerrarModal()">&#10005;</button></div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="campo full"><label>Nombre completo <span class="req">*</span></label><input id="eNombre" value="${e?escapeHtml(e.nombre):''}" placeholder="Ej: Dr. Juan Martínez"></div>
-        <div class="campo"><label>Especialidad <span class="req">*</span></label><input id="eEspecialidad" value="${e?escapeHtml(e.especialidad):''}" placeholder="Ej: Cardiología"></div>
-        <div class="campo"><label>Teléfono</label><input id="eTelefono" value="${e?escapeHtml(e.telefono||''):''}"></div>
-        <div class="campo"><label>Email</label><input id="eEmail" value="${e?escapeHtml(e.email||''):''}"></div>
-        <div class="campo"><label>Horario de atención</label><input id="eHorario" value="${e?escapeHtml(e.horario||''):''}" placeholder="Ej: Lun-Vie 09:00-17:00"></div>
-        <div class="campo full"><label>Convenios de atención</label>
-          <div class="check-group">
-            <label class="check-item"><input type="checkbox" id="convParticular" ${conv.includes('particular')?'checked':''}> Particular</label>
-            <label class="check-item"><input type="checkbox" id="convIsapre" ${conv.includes('isapre')?'checked':''}> ISAPRE</label>
-            <label class="check-item"><input type="checkbox" id="convFonasa" ${conv.includes('fonasa')?'checked':''}> FONASA</label>
-          </div>
-        </div>
-      </div>
-      <div class="form-acciones"><button class="btn btn-linea" onclick="cerrarModal()">Cancelar</button><button class="btn btn-primario" onclick="guardarEspecialista('${e?e.id:''}')">${e?'Guardar cambios':'Crear especialista'}</button></div>
-    </div>
-  `);
-}
-function guardarEspecialista(id){
-  const nombre = document.getElementById('eNombre').value.trim();
-  const especialidad = document.getElementById('eEspecialidad').value.trim();
-  if(!nombre || !especialidad){ toast('Nombre y especialidad son obligatorios','error'); return; }
-  const convenios = [];
-  if(document.getElementById('convParticular').checked) convenios.push('particular');
-  if(document.getElementById('convIsapre').checked) convenios.push('isapre');
-  if(document.getElementById('convFonasa').checked) convenios.push('fonasa');
-  const datos = { nombre, especialidad, telefono:document.getElementById('eTelefono').value.trim(), email:document.getElementById('eEmail').value.trim(), horario:document.getElementById('eHorario').value.trim(), convenios };
-  if(id){ Object.assign(ESPECIALISTAS.find(x=>x.id===id), datos); toast('Especialista actualizado','exito'); }
-  else{ ESPECIALISTAS.push(Object.assign({id:uid('esp')}, datos)); toast('Especialista creado','exito'); }
-  persistTodo(); cerrarModal(); renderEspecialistas(); renderDashboard();
-}
-function eliminarEspecialista(id){
-  if(!confirm('¿Eliminar este especialista? Las citas asociadas quedarán sin especialista.')) return;
-  ESPECIALISTAS = ESPECIALISTAS.filter(x=>x.id!==id);
-  persistTodo(); renderEspecialistas(); renderDashboard();
-  toast('Especialista eliminado','exito');
-}
-function badgeConvenio(c){
-  const map = {particular:['Particular','badge-azul'], isapre:['ISAPRE','badge-verde'], fonasa:['FONASA','badge-ambar']};
-  const [txt,cls] = map[c] || [c,'badge-gris'];
-  return `<span class="badge ${cls}">${txt}</span>`;
-}
-function renderEspecialistas(){
-  const q = (document.getElementById('buscarEspecialista').value||'').toLowerCase();
-  const filtrados = ESPECIALISTAS.filter(e=> e.nombre.toLowerCase().includes(q) || e.especialidad.toLowerCase().includes(q));
-  const tbody = document.getElementById('tablaEspecialistas');
-  if(!filtrados.length){
-    tbody.innerHTML = `<tr><td colspan="6"><div class="vacio"><div class="ico-vacio">&#129658;</div>No hay especialistas${q?' que coincidan':' registrados aún'}.<div class="centrar"><button class="btn btn-primario btn-sm" onclick="abrirModalEspecialista()">+ Registrar especialista</button></div></div></td></tr>`;
-    return;
-  }
-  tbody.innerHTML = filtrados.map(e=>`
-    <tr>
-      <td><b>${escapeHtml(e.nombre)}</b></td>
-      <td>${escapeHtml(e.especialidad)}</td>
-      <td>${(e.convenios||[]).map(badgeConvenio).join(' ') || '<span class="badge badge-gris">Sin convenios</span>'}</td>
-      <td>${escapeHtml(e.telefono||'—')}</td>
-      <td>${escapeHtml(e.email||'—')}</td>
-      <td><div class="fila-acciones">
-        <button class="btn btn-icono" title="Editar" onclick="abrirModalEspecialista('${e.id}')">&#9998;</button>
-        <button class="btn btn-icono" title="Eliminar" onclick="eliminarEspecialista('${e.id}')">&#128465;</button>
-      </div></td>
-    </tr>
-  `).join('');
-  // refrescar selects que dependen de especialistas
-  const sel = document.getElementById('filtroEspecialistaAgenda');
-  const actual = sel.value;
-  sel.innerHTML = '<option value="">Todos los especialistas</option>' + ESPECIALISTAS.map(e=>`<option value="${e.id}">${escapeHtml(e.nombre)}</option>`).join('');
-  sel.value = actual;
-}
+/* ============ HELPERS ============ */
+function val(id){ const e=document.getElementById(id); return e?e.value.trim():''; }
+let toastT;
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2200); }
 
-/* ======================================================================
-   MÓDULO AGENDAMIENTO
-====================================================================== */
-const HORAS_DIA = (()=>{ const arr=[]; for(let h=8;h<=19;h++){ arr.push(String(h).padStart(2,'0')+':00'); arr.push(String(h).padStart(2,'0')+':30'); } return arr; })();
-
-function irHoyAgenda(){ document.getElementById('fechaAgenda').value = hoyISO(); renderAgenda(); }
-function cambiarDiaAgenda(delta){
-  const inp = document.getElementById('fechaAgenda');
-  const d = new Date(inp.value + 'T00:00:00');
-  d.setDate(d.getDate()+delta);
-  inp.value = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-  renderAgenda();
-}
-
-function abrirModalCita(id){
-  const c = id ? CITAS.find(x=>x.id===id) : null;
-  const fechaSel = document.getElementById('fechaAgenda') ? document.getElementById('fechaAgenda').value : hoyISO();
-  abrirModal(`
-    <div class="modal-head"><h3>${c?'Editar hora médica':'Agendar hora médica'}</h3><button class="cerrar-x" onclick="cerrarModal()">&#10005;</button></div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="campo full"><label>Paciente <span class="req">*</span></label><select id="cPaciente"><option value="">Seleccionar...</option>${opcionesPacientesHTML(c?c.pacienteId:null)}</select></div>
-        <div class="campo full"><label>Especialista <span class="req">*</span></label><select id="cEspecialista"><option value="">Seleccionar...</option>${opcionesEspecialistasHTML(c?c.especialistaId:null)}</select></div>
-        <div class="campo"><label>Fecha <span class="req">*</span></label><input type="date" id="cFecha" value="${c?c.fecha:fechaSel}"></div>
-        <div class="campo"><label>Hora <span class="req">*</span></label><select id="cHora">${HORAS_DIA.map(h=>`<option value="${h}" ${c&&c.hora===h?'selected':''}>${h}</option>`).join('')}</select></div>
-        <div class="campo"><label>Previsión</label><select id="cPrevision">
-          <option ${c&&c.prevision==='Particular'?'selected':''}>Particular</option>
-          <option ${c&&c.prevision==='ISAPRE'?'selected':''}>ISAPRE</option>
-          <option ${c&&c.prevision==='FONASA'?'selected':''}>FONASA</option>
-        </select></div>
-        <div class="campo"><label>Estado</label><select id="cEstado">
-          <option value="confirmada" ${c&&c.estado==='confirmada'?'selected':''}>Confirmada</option>
-          <option value="pendiente" ${c&&c.estado==='pendiente'?'selected':''}>Pendiente</option>
-          <option value="cancelada" ${c&&c.estado==='cancelada'?'selected':''}>Cancelada</option>
-        </select></div>
-        <div class="campo full"><label>Motivo de consulta</label><input id="cMotivo" value="${c?escapeHtml(c.motivo||''):''}" placeholder="Ej: Control, primera consulta..."></div>
-      </div>
-      <div class="form-acciones">
-        ${c?`<button class="btn btn-peligro" onclick="eliminarCita('${c.id}')" style="margin-right:auto;">Eliminar cita</button>`:''}
-        <button class="btn btn-linea" onclick="cerrarModal()">Cancelar</button>
-        <button class="btn btn-primario" onclick="guardarCita('${c?c.id:''}')">${c?'Guardar cambios':'Agendar'}</button>
-      </div>
-    </div>
-  `);
-}
-function guardarCita(id){
-  const pacienteId = document.getElementById('cPaciente').value;
-  const especialistaId = document.getElementById('cEspecialista').value;
-  const fecha = document.getElementById('cFecha').value;
-  const hora = document.getElementById('cHora').value;
-  if(!pacienteId || !especialistaId || !fecha){ toast('Completa paciente, especialista y fecha','error'); return; }
-  const choque = CITAS.find(c=> c.id!==id && c.especialistaId===especialistaId && c.fecha===fecha && c.hora===hora && c.estado!=='cancelada');
-  if(choque){ toast('El especialista ya tiene una hora agendada en ese horario','error'); return; }
-  const datos = { pacienteId, especialistaId, fecha, hora, prevision:document.getElementById('cPrevision').value, estado:document.getElementById('cEstado').value, motivo:document.getElementById('cMotivo').value.trim() };
-  if(id){ Object.assign(CITAS.find(x=>x.id===id), datos); toast('Cita actualizada','exito'); }
-  else{ CITAS.push(Object.assign({id:uid('cita')}, datos)); toast('Hora agendada correctamente','exito'); }
-  persistTodo(); cerrarModal(); renderAgenda(); renderDashboard();
-}
-function eliminarCita(id){
-  if(!confirm('¿Eliminar esta cita?')) return;
-  CITAS = CITAS.filter(c=>c.id!==id);
-  persistTodo(); cerrarModal(); renderAgenda(); renderDashboard();
-  toast('Cita eliminada','exito');
-}
-
-function renderAgenda(){
-  if(!document.getElementById('fechaAgenda').value) document.getElementById('fechaAgenda').value = hoyISO();
-  const fecha = document.getElementById('fechaAgenda').value;
-  const filtroEsp = document.getElementById('filtroEspecialistaAgenda').value;
-  const citasDia = CITAS.filter(c=> c.fecha===fecha && (!filtroEsp || c.especialistaId===filtroEsp));
-  const cont = document.getElementById('franjasAgenda');
-  const leyendaEl = document.getElementById('leyendaAgenda');
-  if(leyendaEl) leyendaEl.innerHTML = `
-    <div class="leyenda-item"><span class="leyenda-punto" style="background:var(--verde);"></span> Confirmada</div>
-    <div class="leyenda-item"><span class="leyenda-punto" style="background:var(--ambar);"></span> Pendiente</div>
-    <div class="leyenda-item"><span class="leyenda-punto" style="background:var(--rojo);"></span> Cancelada</div>
-  `;
-  if(ESPECIALISTAS.length===0){
-    cont.innerHTML = `<div class="vacio"><div class="ico-vacio">&#129658;</div>Registra al menos un especialista para poder agendar horas.</div>`;
-    return;
-  }
-  cont.innerHTML = HORAS_DIA.map(h=>{
-    const citasHora = citasDia.filter(c=>c.hora===h);
-    return `<div class="franja">
-      <div class="hora-lbl">${h}</div>
-      <div class="slot">${citasHora.length ? citasHora.map(c=>{
-        const p = PACIENTES.find(x=>x.id===c.pacienteId);
-        const e = ESPECIALISTAS.find(x=>x.id===c.especialistaId);
-        const estadoClase = c.estado==='confirmada' ? 'confirmada' : c.estado==='cancelada' ? 'cancelada' : 'pendiente';
-        return `<div class="cita-chip ${estadoClase}" onclick="abrirModalCita('${c.id}')" style="cursor:pointer;">
-          <div class="punto"></div>
-          <div class="txt"><b>${escapeHtml(p?p.nombre:'Paciente eliminado')}</b><span>${escapeHtml(e?e.nombre:'—')} · ${escapeHtml(c.prevision)}${c.motivo?' · '+escapeHtml(c.motivo):''}</span></div>
-          <span class="badge ${c.estado==='confirmada'?'badge-verde':c.estado==='cancelada'?'badge-rojo':'badge-ambar'}">${c.estado}</span>
-        </div>`;
-      }).join('') : '<span class="slot-vacio">Disponible</span>'}</div>
-    </div>`;
-  }).join('');
-}
-
-/* ======================================================================
-   MÓDULO PAGOS Y FINANZAS
-====================================================================== */
-function abrirModalPago(tipo){
-  abrirModal(`
-    <div class="modal-head"><h3>${tipo==='ingreso'?'Registrar pago / ingreso':'Registrar gasto del centro'}</h3><button class="cerrar-x" onclick="cerrarModal()">&#10005;</button></div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="campo"><label>Fecha</label><input type="date" id="pgFecha" value="${hoyISO()}"></div>
-        <div class="campo"><label>Categoría</label><input id="pgCategoria" value="${tipo==='ingreso'?'Consulta médica':'Insumos y materiales'}" placeholder="Ej: Consulta, arriendo, insumos..."></div>
-        ${tipo==='ingreso' ? `
-        <div class="campo full"><label>Paciente</label><select id="pgPaciente"><option value="">— Sin asociar —</option>${opcionesPacientesHTML()}</select></div>
-        <div class="campo full"><label>Especialista</label><select id="pgEspecialista"><option value="">— Sin asociar —</option>${opcionesEspecialistasHTML()}</select></div>
-        <div class="campo"><label>Método de pago</label><select id="pgMetodo">
-          <option value="particular">Particular</option>
-          <option value="bono">Bono</option>
-          <option value="isapre">ISAPRE</option>
-          <option value="fonasa">FONASA</option>
-        </select></div>` : `<input type="hidden" id="pgMetodo" value="gasto">`}
-        <div class="campo"><label>Monto (CLP) <span class="req">*</span></label><input type="number" id="pgMonto" min="0" placeholder="0"></div>
-        <div class="campo full"><label>Descripción</label><input id="pgDescripcion" placeholder="Detalle del ${tipo==='ingreso'?'pago':'gasto'}"></div>
-      </div>
-      <div class="form-acciones"><button class="btn btn-linea" onclick="cerrarModal()">Cancelar</button><button class="btn btn-primario" onclick="guardarPago('${tipo}')">Guardar</button></div>
-    </div>
-  `);
-}
-function guardarPago(tipo){
-  const monto = Number(document.getElementById('pgMonto').value);
-  if(!monto || monto<=0){ toast('Ingresa un monto válido','error'); return; }
-  const registro = {
-    id: uid('pago'), tipo,
-    categoria: document.getElementById('pgCategoria').value.trim() || (tipo==='ingreso'?'Consulta médica':'Gasto general'),
-    pacienteId: tipo==='ingreso' ? (document.getElementById('pgPaciente')?document.getElementById('pgPaciente').value:'') : '',
-    especialistaId: tipo==='ingreso' ? (document.getElementById('pgEspecialista')?document.getElementById('pgEspecialista').value:'') : '',
-    monto, metodo: document.getElementById('pgMetodo').value,
-    fecha: document.getElementById('pgFecha').value || hoyISO(),
-    descripcion: document.getElementById('pgDescripcion').value.trim()
-  };
-  PAGOS.push(registro);
-  persistTodo(); cerrarModal(); renderPagos(); renderDashboard();
-  toast(tipo==='ingreso'?'Pago registrado':'Gasto registrado','exito');
-}
-function eliminarPago(id){
-  if(!confirm('¿Eliminar este movimiento financiero?')) return;
-  PAGOS = PAGOS.filter(p=>p.id!==id);
-  persistTodo(); renderPagos(); renderDashboard();
-  toast('Movimiento eliminado','exito');
-}
-function metodoBadge(m){
-  const map = {particular:['Particular','badge-azul'],bono:['Bono','badge-verde'],isapre:['ISAPRE','badge-ambar'],fonasa:['FONASA','badge-gris'],gasto:['Gasto centro','badge-rojo']};
-  const [txt,cls] = map[m]||[m,'badge-gris'];
-  return `<span class="badge ${cls}">${txt}</span>`;
-}
-function renderPagos(){
-  const tipoF = document.getElementById('filtroTipoPago').value;
-  const metF = document.getElementById('filtroMetodoPago').value;
-  let filtrados = [...PAGOS].sort((a,b)=>b.fecha.localeCompare(a.fecha));
-  if(tipoF) filtrados = filtrados.filter(p=>p.tipo===tipoF);
-  if(metF) filtrados = filtrados.filter(p=>p.metodo===metF);
-
-  const ahora = new Date();
-  const mesActual = ahora.getFullYear()+'-'+String(ahora.getMonth()+1).padStart(2,'0');
-  const pagosMes = PAGOS.filter(p=>p.fecha.startsWith(mesActual));
-  const ingresosMes = pagosMes.filter(p=>p.tipo==='ingreso').reduce((s,p)=>s+p.monto,0);
-  const egresosMes = pagosMes.filter(p=>p.tipo==='egreso').reduce((s,p)=>s+p.monto,0);
-  const balanceMes = ingresosMes-egresosMes;
-  const ingresosTotales = PAGOS.filter(p=>p.tipo==='ingreso').reduce((s,p)=>s+p.monto,0);
-
-  document.getElementById('pagosCards').innerHTML = `
-    <div class="card-stat"><div class="top"><div class="icono">&#128176;</div></div><div class="valor">${fmtCLP(ingresosMes)}</div><div class="etiqueta">Ingresos del mes</div></div>
-    <div class="card-stat"><div class="top"><div class="icono">&#128184;</div></div><div class="valor">${fmtCLP(egresosMes)}</div><div class="etiqueta">Egresos del mes</div></div>
-    <div class="card-stat"><div class="top"><div class="icono">&#9878;</div></div><div class="valor" style="color:${balanceMes>=0?'var(--verde)':'var(--rojo)'}">${fmtCLP(balanceMes)}</div><div class="etiqueta">Balance del mes</div></div>
-    <div class="card-stat"><div class="top"><div class="icono">&#128200;</div></div><div class="valor">${fmtCLP(ingresosTotales)}</div><div class="etiqueta">Ingresos históricos</div></div>
-  `;
-
-  const tbody = document.getElementById('tablaPagos');
-  if(!filtrados.length){
-    tbody.innerHTML = `<tr><td colspan="7"><div class="vacio"><div class="ico-vacio">&#128176;</div>No hay movimientos financieros registrados aún.</div></td></tr>`;
-    return;
-  }
-  tbody.innerHTML = filtrados.map(p=>{
-    const pac = PACIENTES.find(x=>x.id===p.pacienteId);
-    return `<tr>
-      <td>${fmtFecha(p.fecha)}</td>
-      <td><span class="badge ${p.tipo==='ingreso'?'badge-verde':'badge-rojo'}">${p.tipo==='ingreso'?'Ingreso':'Egreso'}</span></td>
-      <td><b>${escapeHtml(p.categoria)}</b>${p.descripcion?`<div style="color:var(--texto-600);font-size:12px;">${escapeHtml(p.descripcion)}</div>`:''}</td>
-      <td>${pac?escapeHtml(pac.nombre):'—'}</td>
-      <td>${metodoBadge(p.metodo)}</td>
-      <td style="font-weight:700;color:${p.tipo==='ingreso'?'var(--verde)':'var(--rojo)'}">${p.tipo==='ingreso'?'+':'-'}${fmtCLP(p.monto)}</td>
-      <td><button class="btn btn-icono" onclick="eliminarPago('${p.id}')">&#128465;</button></td>
-    </tr>`;
-  }).join('');
-}
-
-/* ======================================================================
-   DASHBOARD Y GRÁFICOS (SVG vanilla, sin librerías)
-====================================================================== */
-function ultimos6Meses(){
-  const arr = [];
-  const d = new Date();
-  d.setDate(1);
-  for(let i=5;i>=0;i--){
-    const dd = new Date(d.getFullYear(), d.getMonth()-i, 1);
-    arr.push({ key: dd.getFullYear()+'-'+String(dd.getMonth()+1).padStart(2,'0'), label: dd.toLocaleDateString('es-CL',{month:'short'}).replace('.','') });
-  }
-  return arr;
-}
-
-function renderChartFinanzas(){
-  const meses = ultimos6Meses();
-  const datos = meses.map(m=>{
-    const ing = PAGOS.filter(p=>p.tipo==='ingreso' && p.fecha.startsWith(m.key)).reduce((s,p)=>s+p.monto,0);
-    const egr = PAGOS.filter(p=>p.tipo==='egreso' && p.fecha.startsWith(m.key)).reduce((s,p)=>s+p.monto,0);
-    return { ...m, ing, egr };
-  });
-  const max = Math.max(1, ...datos.map(d=>Math.max(d.ing,d.egr)));
-  const W = 560, H = 220, padB = 30, padT = 10, chartH = H-padB-padT;
-  const grupoW = W/datos.length;
-  const barW = 20;
-  let bars = '';
-  datos.forEach((d,i)=>{
-    const cx = i*grupoW + grupoW/2;
-    const hIng = (d.ing/max)*chartH, hEgr = (d.egr/max)*chartH;
-    bars += `<rect x="${cx-barW-3}" y="${H-padB-hIng}" width="${barW}" height="${hIng}" rx="4" fill="#1a72b0"><title>Ingresos ${d.label}: ${fmtCLP(d.ing)}</title></rect>`;
-    bars += `<rect x="${cx+3}" y="${H-padB-hEgr}" width="${barW}" height="${hEgr}" rx="4" fill="#e0847d"><title>Egresos ${d.label}: ${fmtCLP(d.egr)}</title></rect>`;
-    bars += `<text x="${cx}" y="${H-10}" text-anchor="middle" font-size="11" fill="#4d6a7c" font-family="Inter,sans-serif" text-transform="capitalize">${d.label}</text>`;
-  });
-  document.getElementById('chartFinanzas').innerHTML = `
-    <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;">
-      <line x1="0" y1="${H-padB}" x2="${W}" y2="${H-padB}" stroke="#d7e8f2" stroke-width="1"/>
-      ${bars}
-    </svg>
-    <div class="leyenda">
-      <div class="leyenda-item"><span class="leyenda-punto" style="background:#1a72b0;"></span> Ingresos</div>
-      <div class="leyenda-item"><span class="leyenda-punto" style="background:#e0847d;"></span> Egresos</div>
-    </div>
-  `;
-}
-
-function renderChartPrevision(){
-  const grupos = {};
-  PACIENTES.forEach(p=>{ const k = p.prevision||'Sin registrar'; grupos[k] = (grupos[k]||0)+1; });
-  const total = PACIENTES.length;
-  const colores = { 'FONASA':'#1a72b0', 'ISAPRE':'#5fbdec', 'Particular':'#0a3a5c', 'Sin registrar':'#c7dcea' };
-  const cont = document.getElementById('chartPrevision');
-  const leyenda = document.getElementById('leyendaPrevision');
-  if(!total){
-    cont.innerHTML = `<div class="vacio"><div class="ico-vacio">&#128202;</div>Aún no hay pacientes para mostrar estadísticas.</div>`;
-    leyenda.innerHTML = '';
-    return;
-  }
-  const R = 70, C = 80;
-  let acumulado = 0;
-  let paths = '';
-  Object.entries(grupos).forEach(([k,v])=>{
-    const frac = v/total;
-    const a0 = acumulado*2*Math.PI - Math.PI/2;
-    acumulado += frac;
-    const a1 = acumulado*2*Math.PI - Math.PI/2;
-    const x0 = C + R*Math.cos(a0), y0 = C + R*Math.sin(a0);
-    const x1 = C + R*Math.cos(a1), y1 = C + R*Math.sin(a1);
-    const largeArc = frac > 0.5 ? 1 : 0;
-    const color = colores[k] || '#9adcf5';
-    if(frac >= 0.999){
-      paths += `<circle cx="${C}" cy="${C}" r="${R}" fill="${color}"/>`;
-    } else {
-      paths += `<path d="M${C},${C} L${x0},${y0} A${R},${R} 0 ${largeArc} 1 ${x1},${y1} Z" fill="${color}" stroke="#fff" stroke-width="2"/>`;
-    }
-  });
-  cont.innerHTML = `<svg viewBox="0 0 160 160" style="width:180px;max-width:100%;display:block;margin:0 auto;"><circle cx="${C}" cy="${C}" r="${R}" fill="#eef2f5"/>${paths}<circle cx="${C}" cy="${C}" r="38" fill="#fff"/><text x="${C}" y="${C+5}" text-anchor="middle" font-size="20" font-weight="800" fill="#0a3a5c" font-family="Manrope,sans-serif">${total}</text></svg>`;
-  leyenda.innerHTML = Object.entries(grupos).map(([k,v])=>`<div class="leyenda-item"><span class="leyenda-punto" style="background:${colores[k]||'#9adcf5'};"></span> ${k} (${v})</div>`).join('');
-}
-
-/* ---------- Informe de estado por período (diario / semanal / mensual) ---------- */
-let PERIODO_INFORME = 'dia';
-function rangoPeriodo(periodo){
-  const hoy = new Date(); hoy.setHours(0,0,0,0);
-  let inicio = new Date(hoy), fin = new Date(hoy);
-  if(periodo==='dia'){ /* inicio = fin = hoy */ }
-  if(periodo==='semana'){ const diaSemana = (hoy.getDay()+6)%7; inicio.setDate(hoy.getDate()-diaSemana); fin.setDate(inicio.getDate()+6); }
-  if(periodo==='mes'){ inicio = new Date(hoy.getFullYear(), hoy.getMonth(), 1); fin = new Date(hoy.getFullYear(), hoy.getMonth()+1, 0); }
-  const aISO = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-  return { inicio: aISO(inicio), fin: aISO(fin) };
-}
-function cambiarPeriodoInforme(periodo){
-  PERIODO_INFORME = periodo;
-  document.querySelectorAll('.periodo-btn').forEach(b=>{
-    const activo = b.dataset.periodo===periodo;
-    b.classList.toggle('activo', activo);
-    b.classList.toggle('btn-secundario', activo);
-    b.classList.toggle('btn-linea', !activo);
-  });
-  renderInformePeriodo();
-}
-document.getElementById('selectorPeriodo').addEventListener('click', e=>{
-  const b = e.target.closest('.periodo-btn'); if(!b) return;
-  cambiarPeriodoInforme(b.dataset.periodo);
-});
-function renderInformePeriodo(){
-  const { inicio, fin } = rangoPeriodo(PERIODO_INFORME);
-  const etiquetas = { dia:'Resumen del día ('+fmtFecha(inicio)+')', semana:'Resumen semanal ('+fmtFecha(inicio)+' — '+fmtFecha(fin)+')', mes:'Resumen mensual ('+fmtFecha(inicio)+' — '+fmtFecha(fin)+')' };
-  document.getElementById('infoPeriodoTexto').textContent = etiquetas[PERIODO_INFORME];
-
-  const citasPeriodo = CITAS.filter(c=> c.fecha>=inicio && c.fecha<=fin);
-  const confirmadas = citasPeriodo.filter(c=>c.estado==='confirmada').length;
-  const pendientes = citasPeriodo.filter(c=>c.estado==='pendiente').length;
-  const canceladas = citasPeriodo.filter(c=>c.estado==='cancelada').length;
-  const pagosPeriodo = PAGOS.filter(p=> p.fecha>=inicio && p.fecha<=fin);
-  const ingresos = pagosPeriodo.filter(p=>p.tipo==='ingreso').reduce((s,p)=>s+p.monto,0);
-  const egresos = pagosPeriodo.filter(p=>p.tipo==='egreso').reduce((s,p)=>s+p.monto,0);
-  const balance = ingresos-egresos;
-  const pacientesAtendidos = new Set(citasPeriodo.filter(c=>c.estado!=='cancelada').map(c=>c.pacienteId)).size;
-
-  document.getElementById('informeCards').innerHTML = `
-    <div class="card-stat"><div class="top"><div class="icono">&#128197;</div></div><div class="valor">${citasPeriodo.length}</div><div class="etiqueta">Citas totales</div></div>
-    <div class="card-stat"><div class="top"><div class="icono">&#9989;</div></div><div class="valor" style="color:var(--verde)">${confirmadas}</div><div class="etiqueta">Confirmadas</div></div>
-    <div class="card-stat"><div class="top"><div class="icono">&#9203;</div></div><div class="valor" style="color:var(--ambar)">${pendientes}</div><div class="etiqueta">Pendientes</div></div>
-    <div class="card-stat"><div class="top"><div class="icono">&#10060;</div></div><div class="valor" style="color:var(--rojo)">${canceladas}</div><div class="etiqueta">Canceladas</div></div>
-    <div class="card-stat"><div class="top"><div class="icono">&#128100;</div></div><div class="valor">${pacientesAtendidos}</div><div class="etiqueta">Pacientes atendidos</div></div>
-    <div class="card-stat"><div class="top"><div class="icono">&#128176;</div></div><div class="valor">${fmtCLP(ingresos)}</div><div class="etiqueta">Ingresos del período</div></div>
-    <div class="card-stat"><div class="top"><div class="icono">&#128184;</div></div><div class="valor">${fmtCLP(egresos)}</div><div class="etiqueta">Egresos del período</div></div>
-    <div class="card-stat"><div class="top"><div class="icono">&#9878;</div></div><div class="valor" style="color:${balance>=0?'var(--verde)':'var(--rojo)'}">${fmtCLP(balance)}</div><div class="etiqueta">Balance del período</div></div>
-  `;
-}
-
-function renderDashboard(){
-  const hoy = hoyISO();
-  const citasHoy = CITAS.filter(c=>c.fecha===hoy && c.estado!=='cancelada').length;
-  const ahora = new Date();
-  const mesActual = ahora.getFullYear()+'-'+String(ahora.getMonth()+1).padStart(2,'0');
-  const ingresosMes = PAGOS.filter(p=>p.tipo==='ingreso' && p.fecha.startsWith(mesActual)).reduce((s,p)=>s+p.monto,0);
-  const egresosMes = PAGOS.filter(p=>p.tipo==='egreso' && p.fecha.startsWith(mesActual)).reduce((s,p)=>s+p.monto,0);
-  const balance = ingresosMes-egresosMes;
-
-  document.getElementById('dashCards').innerHTML = `
-    <div class="card-stat"><div class="top"><div class="icono">&#128100;</div></div><div class="valor">${PACIENTES.length}</div><div class="etiqueta">Pacientes registrados</div></div>
-    <div class="card-stat"><div class="top"><div class="icono">&#129658;</div></div><div class="valor">${ESPECIALISTAS.length}</div><div class="etiqueta">Especialistas activos</div></div>
-    <div class="card-stat"><div class="top"><div class="icono">&#128197;</div></div><div class="valor">${citasHoy}</div><div class="etiqueta">Citas agendadas hoy</div></div>
-    <div class="card-stat"><div class="top"><div class="icono">&#128176;</div></div><div class="valor">${fmtCLP(ingresosMes)}</div><div class="etiqueta">Ingresos del mes</div><span class="delta ${balance>=0?'pos':'neg'}">${balance>=0?'Balance +':'Balance '}${fmtCLP(balance)}</span></div>
-  `;
-
-  const proximas = [...CITAS].filter(c=>c.fecha>=hoy && c.estado!=='cancelada').sort((a,b)=> (a.fecha+a.hora).localeCompare(b.fecha+b.hora)).slice(0,6);
-  const tbody = document.getElementById('dashProximasCitas');
-  tbody.innerHTML = proximas.length ? proximas.map(c=>{
-    const p = PACIENTES.find(x=>x.id===c.pacienteId), e = ESPECIALISTAS.find(x=>x.id===c.especialistaId);
-    return `<tr><td>${p?escapeHtml(p.nombre):'—'}</td><td>${e?escapeHtml(e.nombre):'—'}</td><td>${fmtFecha(c.fecha)}</td><td>${c.hora}</td><td><span class="badge badge-azul">${escapeHtml(c.prevision)}</span></td></tr>`;
-  }).join('') : `<tr><td colspan="5"><div class="vacio">No hay citas próximas agendadas.</div></td></tr>`;
-
-  const conteoEsp = {};
-  CITAS.forEach(c=>{ if(c.estado!=='cancelada') conteoEsp[c.especialistaId] = (conteoEsp[c.especialistaId]||0)+1; });
-  const ranking = Object.entries(conteoEsp).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  const maxRank = Math.max(1, ...ranking.map(r=>r[1]));
-  const rankCont = document.getElementById('rankingEspecialistas');
-  rankCont.innerHTML = ranking.length ? ranking.map(([id,count])=>{
-    const e = ESPECIALISTAS.find(x=>x.id===id);
-    const pct = Math.round((count/maxRank)*100);
-    return `<div>
-      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><b>${e?escapeHtml(e.nombre):'Especialista eliminado'}</b><span style="color:var(--texto-600);">${count} citas</span></div>
-      <div style="background:var(--azul-bg);border-radius:8px;height:8px;overflow:hidden;"><div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--azul-600),var(--cel-400));"></div></div>
-    </div>`;
-  }).join('') : `<div class="vacio">Aún no hay citas registradas.</div>`;
-
-  renderChartFinanzas();
-  renderChartPrevision();
-  renderInformePeriodo();
-}
-
-/* ---------- Inicio ---------- */
-function iniciarApp(){
-  sembrarDatosDemo();
-  PACIENTES = cargar(LS_KEYS.pacientes);
-  ESPECIALISTAS = cargar(LS_KEYS.especialistas);
-  CITAS = cargar(LS_KEYS.citas);
-  PAGOS = cargar(LS_KEYS.pagos);
-
-  document.getElementById('fechaHoyTop').textContent = new Date().toLocaleDateString('es-CL',{weekday:'long', year:'numeric', month:'long', day:'numeric'});
-  document.getElementById('fechaAgenda').value = hoyISO();
-  document.getElementById('filtroTipoPago').value = '';
-
-  renderDashboard();
-  renderPacientes();
-  renderEspecialistas();
-  renderAgenda();
-  renderPagos();
-}
-// Si ya había sesión iniciada al cargar el script (recarga de página)
-// La app se inicia únicamente desde entrarApp() al validar credenciales correctas.
+/* ============ INIT ============ */
+login();
 </script>
 </body>
 </html>
